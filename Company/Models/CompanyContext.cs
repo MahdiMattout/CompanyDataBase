@@ -8,10 +8,6 @@ namespace Company.Models
 {
     public partial class CompanyContext : DbContext
     {
-        public CompanyContext()
-        {
-        }
-
         public CompanyContext(DbContextOptions<CompanyContext> options)
             : base(options)
         {
@@ -31,7 +27,7 @@ namespace Company.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseMySQL("Server=localhost;port=3306;Database=Company;username=root;password=allaw1442001");
+                optionsBuilder.UseMySQL("Server=localhost;port=5555;Database=Company;username=root;password=omar123");
             }
         }
 
