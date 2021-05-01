@@ -14,6 +14,7 @@ namespace Company.Models
 
         public int AdminId { get; set; }
 
+        public virtual Employee AdminNavigation { get; set; }
         public virtual ICollection<CompanyPc> CompanyPcs { get; set; }
     }
 }

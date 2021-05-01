@@ -43,7 +43,7 @@ namespace Company.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(string name, [Bind("Name,Country,City,PhoneNumber,ContactEmail")] Models.Company company)
+        public IActionResult Edit(string name, [Bind("Name,Country,City,Zip,PhoneNumber,ContactEmail")] Models.Company company)
         {
             if (ModelState.IsValid)
             {

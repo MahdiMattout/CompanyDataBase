@@ -10,5 +10,7 @@ namespace Company.Models
         public int Salary { get; set; }
         public int? Bonus { get; set; }
         public int MonthlyEmployeeId { get; set; }
+
+        public virtual Employee MonthlyEmployee { get; set; }
     }
 }

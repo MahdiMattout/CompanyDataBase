@@ -39,7 +39,16 @@ namespace Company.Models
 
                 entity.HasIndex(e => e.AdminId, "ID_idx");
 
+                entity.HasIndex(e => e.AdminId, "adminID_UNIQUE")
+                    .IsUnique();
+
                 entity.Property(e => e.AdminId).HasColumnName("adminID");
+
+                entity.HasOne(d => d.AdminNavigation)
+                    .WithOne(p => p.Admin)
+                    .HasPrincipalKey<Employee>(p => p.EmployeeId)
+                    .HasForeignKey<Admin>(d => d.AdminId)
+                    .HasConstraintName("adminID");
             });
 
             modelBuilder.Entity<Company>(entity =>
@@ -133,7 +142,12 @@ namespace Company.Models
 
                 entity.HasIndex(e => e.CompanyName, "CompanyName_idx");
 
-                entity.Property(e => e.EmployeeId).HasColumnName("employeeID");
+                entity.HasIndex(e => e.EmployeeId, "employeeID_UNIQUE")
+                    .IsUnique();
+
+                entity.Property(e => e.EmployeeId)
+                    .ValueGeneratedOnAdd()
+                    .HasColumnName("employeeID");
 
                 entity.Property(e => e.CompanyName).HasMaxLength(45);
 
@@ -173,6 +187,12 @@ namespace Company.Models
                 entity.ToTable("hourly_paid");
 
                 entity.Property(e => e.HourlyEmployeeId).HasColumnName("hourlyEmployeeID");
+
+                entity.HasOne(d => d.HourlyEmployee)
+                    .WithOne(p => p.HourlyPaid)
+                    .HasPrincipalKey<Employee>(p => p.EmployeeId)
+                    .HasForeignKey<HourlyPaid>(d => d.HourlyEmployeeId)
+                    .HasConstraintName("hourlyEmployeeID");
             });
 
             modelBuilder.Entity<MonthlyPaid>(entity =>
@@ -183,6 +203,12 @@ namespace Company.Models
                 entity.ToTable("monthly_paid");
 
                 entity.Property(e => e.MonthlyEmployeeId).HasColumnName("monthlyEmployeeID");
+
+                entity.HasOne(d => d.MonthlyEmployee)
+                    .WithOne(p => p.MonthlyPaid)
+                    .HasPrincipalKey<Employee>(p => p.EmployeeId)
+                    .HasForeignKey<MonthlyPaid>(d => d.MonthlyEmployeeId)
+                    .HasConstraintName("monthlyEmployeeID");
             });
 
             modelBuilder.Entity<PcUser>(entity =>
@@ -210,6 +236,12 @@ namespace Company.Models
                     .WithMany(p => p.PcUsers)
                     .HasForeignKey(d => d.PcId)
                     .HasConstraintName("pcID");
+
+                entity.HasOne(d => d.Pcuser)
+                    .WithMany(p => p.PcUsers)
+                    .HasPrincipalKey(p => p.EmployeeId)
+                    .HasForeignKey(d => d.PcuserId)
+                    .HasConstraintName("PCuserID");
             });
 
             modelBuilder.Entity<Relative>(entity =>
@@ -228,6 +260,12 @@ namespace Company.Models
                 entity.Property(e => e.Relationship)
                     .IsRequired()
                     .HasMaxLength(45);
+
+                entity.HasOne(d => d.Employee)
+                    .WithMany(p => p.Relatives)
+                    .HasPrincipalKey(p => p.EmployeeId)
+                    .HasForeignKey(d => d.EmployeeId)
+                    .HasConstraintName("employeeID");
             });
 
             OnModelCreatingPartial(modelBuilder);

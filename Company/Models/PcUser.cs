@@ -12,5 +12,6 @@ namespace Company.Models
         public string PcId { get; set; }
 
         public virtual CompanyPc Pc { get; set; }
+        public virtual Employee Pcuser { get; set; }
     }
 }

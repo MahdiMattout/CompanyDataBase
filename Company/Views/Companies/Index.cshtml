@@ -21,6 +21,9 @@
                 @Html.DisplayNameFor(model => model.City)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.Zip)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.PhoneNumber)
             </th>
             <th>
@@ -43,6 +46,9 @@
                 @Html.DisplayFor(modelItem => item.City)
             </td>
             <td>
+                @Html.DisplayFor(modelItem => item.Zip)
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.PhoneNumber)
             </td>
             <td>
@@ -51,7 +57,7 @@
             <td>
                 <a asp-action="Edit" asp-route-name="@item.Name">Edit</a> |
                 <a asp-action="Details" asp-route-name="@item.Name">Details</a> |
-                <a asp-action="Delete"asp-route-name ="@item.Name">Delete</a>
+                <a asp-action="Delete" asp-route-name="@item.Name">Delete</a>
             </td>
         </tr>
         }
