@@ -103,5 +103,21 @@ namespace Company.Controllers
             _db.SaveChanges();
             return RedirectToAction(nameof(Index));
         }
+        public  IActionResult Details(string? name)
+        {
+            if (name == null)
+            {
+                return NotFound();
+            }
+
+            var company = _db.Companies
+                .FirstOrDefault(m => m.Name == name);
+            if (company == null)
+            {
+                return NotFound();
+            }
+            company.Employees = _db.Employees.Select(p => p).Where(x => x.CompanyName == company.Name).ToList();
+            return View(company);
+        }
     }
 }
