@@ -61,5 +61,47 @@ namespace Company.Controllers
             }
             return View(company);
         }
+        public IActionResult Create()
+        {
+            return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create([Bind("Name,Country,City,PhoneNumber,ContactEmail")] Models.Company company)
+        {
+            if (ModelState.IsValid)
+            {
+                _db.Add(company);
+                await _db.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+
+            return View(company);
+        }
+        public  IActionResult Delete(string? name)
+        {
+            if (name == null)
+            {
+                return NotFound();
+            }
+
+            var company = _db.Companies
+                .FirstOrDefault(m => m.Name == name);
+            if (company == null)
+            {
+                return NotFound();
+            }
+
+            return View(company);
+        }
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public  IActionResult DeleteConfirmed(string name)
+        {
+            var company = _db.Companies.Find(name);
+            _db.Companies.Remove(company);
+            _db.SaveChanges();
+            return RedirectToAction(nameof(Index));
+        }
     }
 }
