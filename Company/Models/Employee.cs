@@ -7,6 +7,12 @@ namespace Company.Models
 {
     public partial class Employee
     {
+        public Employee()
+        {
+            PcUsers = new HashSet<PcUser>();
+            Relatives = new HashSet<Relative>();
+        }
+
         public int EmployeeId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
@@ -19,5 +25,10 @@ namespace Company.Models
         public string CompanyName { get; set; }
 
         public virtual Company CompanyNameNavigation { get; set; }
+        public virtual Admin Admin { get; set; }
+        public virtual HourlyPaid HourlyPaid { get; set; }
+        public virtual MonthlyPaid MonthlyPaid { get; set; }
+        public virtual ICollection<PcUser> PcUsers { get; set; }
+        public virtual ICollection<Relative> Relatives { get; set; }
     }
 }

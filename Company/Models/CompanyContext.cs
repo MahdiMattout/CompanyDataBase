@@ -8,10 +8,6 @@ namespace Company.Models
 {
     public partial class CompanyContext : DbContext
     {
-        public CompanyContext()
-        {
-        }
-
         public CompanyContext(DbContextOptions<CompanyContext> options)
             : base(options)
         {
@@ -31,7 +27,7 @@ namespace Company.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseMySQL("Server=localhost;port=3306;Database=Company;username=root;password=allaw1442001");
+                optionsBuilder.UseMySQL("Server=localhost;port=5555;Database=Company;username=root;password=omar123");
             }
         }
 
@@ -43,7 +39,16 @@ namespace Company.Models
 
                 entity.HasIndex(e => e.AdminId, "ID_idx");
 
+                entity.HasIndex(e => e.AdminId, "adminID_UNIQUE")
+                    .IsUnique();
+
                 entity.Property(e => e.AdminId).HasColumnName("adminID");
+
+                entity.HasOne(d => d.AdminNavigation)
+                    .WithOne(p => p.Admin)
+                    .HasPrincipalKey<Employee>(p => p.EmployeeId)
+                    .HasForeignKey<Admin>(d => d.AdminId)
+                    .HasConstraintName("adminID");
             });
 
             modelBuilder.Entity<Company>(entity =>
@@ -137,7 +142,12 @@ namespace Company.Models
 
                 entity.HasIndex(e => e.CompanyName, "CompanyName_idx");
 
-                entity.Property(e => e.EmployeeId).HasColumnName("employeeID");
+                entity.HasIndex(e => e.EmployeeId, "employeeID_UNIQUE")
+                    .IsUnique();
+
+                entity.Property(e => e.EmployeeId)
+                    .ValueGeneratedOnAdd()
+                    .HasColumnName("employeeID");
 
                 entity.Property(e => e.CompanyName).HasMaxLength(45);
 
@@ -177,6 +187,12 @@ namespace Company.Models
                 entity.ToTable("hourly_paid");
 
                 entity.Property(e => e.HourlyEmployeeId).HasColumnName("hourlyEmployeeID");
+
+                entity.HasOne(d => d.HourlyEmployee)
+                    .WithOne(p => p.HourlyPaid)
+                    .HasPrincipalKey<Employee>(p => p.EmployeeId)
+                    .HasForeignKey<HourlyPaid>(d => d.HourlyEmployeeId)
+                    .HasConstraintName("hourlyEmployeeID");
             });
 
             modelBuilder.Entity<MonthlyPaid>(entity =>
@@ -187,6 +203,12 @@ namespace Company.Models
                 entity.ToTable("monthly_paid");
 
                 entity.Property(e => e.MonthlyEmployeeId).HasColumnName("monthlyEmployeeID");
+
+                entity.HasOne(d => d.MonthlyEmployee)
+                    .WithOne(p => p.MonthlyPaid)
+                    .HasPrincipalKey<Employee>(p => p.EmployeeId)
+                    .HasForeignKey<MonthlyPaid>(d => d.MonthlyEmployeeId)
+                    .HasConstraintName("monthlyEmployeeID");
             });
 
             modelBuilder.Entity<PcUser>(entity =>
@@ -214,6 +236,12 @@ namespace Company.Models
                     .WithMany(p => p.PcUsers)
                     .HasForeignKey(d => d.PcId)
                     .HasConstraintName("pcID");
+
+                entity.HasOne(d => d.Pcuser)
+                    .WithMany(p => p.PcUsers)
+                    .HasPrincipalKey(p => p.EmployeeId)
+                    .HasForeignKey(d => d.PcuserId)
+                    .HasConstraintName("PCuserID");
             });
 
             modelBuilder.Entity<Relative>(entity =>
@@ -232,6 +260,12 @@ namespace Company.Models
                 entity.Property(e => e.Relationship)
                     .IsRequired()
                     .HasMaxLength(45);
+
+                entity.HasOne(d => d.Employee)
+                    .WithMany(p => p.Relatives)
+                    .HasPrincipalKey(p => p.EmployeeId)
+                    .HasForeignKey(d => d.EmployeeId)
+                    .HasConstraintName("employeeID");
             });
 
             OnModelCreatingPartial(modelBuilder);

@@ -1,0 +1,109 @@
+﻿@model Company
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>@Html.DisplayFor(model => model.Name)</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Country)
+            <br />
+            @Html.DisplayNameFor(model => model.City)
+            <br />
+            @Html.DisplayNameFor(model => model.PhoneNumber)
+            <br />
+            @Html.DisplayNameFor(model => model.ContactEmail)
+            <a asp-controller="Employees" asp-action="Create" asp-route-CompanyName="@Model.Name"><input id="AddNewEmployee" type="button" value="New Employee" class="btn btn-primary" /></a>
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Country)
+            <br />
+            @Html.DisplayFor(model => model.City)
+            <br />
+            @Html.DisplayFor(model => model.PhoneNumber)
+            <br />
+            @Html.DisplayFor(model => model.ContactEmail)
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            @Html.DisplayName("Employee ID")
+                        </th>
+                        <th>
+                            @Html.DisplayName("First Name")
+                        </th>
+                        <th>
+                            @Html.DisplayName("Last Name")
+                        </th>
+                        <th>
+                            @Html.DisplayName("Email")
+                        </th>
+                        <th>
+                            @Html.DisplayName("Office Extension")
+                        </th>
+                        <th>
+                            @Html.DisplayName("Address")
+                        </th>
+                        <th>
+                            @Html.DisplayName("Office Number")
+                        </th>
+                        <th>
+                            @Html.DisplayName("Position")
+                        </th>
+                        <th>
+                            @Html.DisplayName("SSN")
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Employees)
+                    {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.EmployeeId)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.FirstName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.LastName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Email)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.OfficeExtension)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Address)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.OfficeNumber)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Position)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Ssn)
+                        </td>
+                        <td>
+                            <a asp-controller="Employees" asp-action="Edit" asp-route-EmployeeId="@item.EmployeeId" asp-route-CompanyName="@Model.Name">Edit</a> |
+                            <a asp-controller="Employees" asp-action="Delete" asp-route-EmployeeId="@item.EmployeeId" asp-route-CompanyName="@Model.Name">Delete</a>
+                        </td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+            <br />
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-Name="@Model.Name">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
