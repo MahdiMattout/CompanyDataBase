@@ -13,13 +13,11 @@ namespace Company.Models
         {
         }
 
-        public virtual DbSet<Admin> Admins { get; set; }
         public virtual DbSet<Company> Companies { get; set; }
         public virtual DbSet<CompanyPc> CompanyPcs { get; set; }
         public virtual DbSet<Employee> Employees { get; set; }
         public virtual DbSet<HourlyPaid> HourlyPaids { get; set; }
         public virtual DbSet<MonthlyPaid> MonthlyPaids { get; set; }
-        public virtual DbSet<PcUser> PcUsers { get; set; }
         public virtual DbSet<Relative> Relatives { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -33,23 +31,6 @@ namespace Company.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Admin>(entity =>
-            {
-                entity.ToTable("admin");
-
-                entity.HasIndex(e => e.AdminId, "ID_idx");
-
-                entity.HasIndex(e => e.AdminId, "adminID_UNIQUE")
-                    .IsUnique();
-
-                entity.Property(e => e.AdminId).HasColumnName("adminID");
-
-                entity.HasOne(d => d.AdminNavigation)
-                    .WithOne(p => p.Admin)
-                    .HasForeignKey<Admin>(d => d.AdminId)
-                    .HasConstraintName("adminID");
-            });
-
             modelBuilder.Entity<Company>(entity =>
             {
                 entity.HasKey(e => e.Name)
@@ -81,15 +62,16 @@ namespace Company.Models
 
             modelBuilder.Entity<CompanyPc>(entity =>
             {
+                entity.HasKey(e => e.EmployeeId)
+                    .HasName("PRIMARY");
+
                 entity.ToTable("company_pcs");
 
-                entity.HasIndex(e => e.Idadmin, "IDAdmin_idx");
+                entity.HasIndex(e => e.EmployeeId, "fk_COMPANY_PCS_EMPLOYEE1_idx");
 
                 entity.HasIndex(e => e.NameofCompany, "nameofCompany_idx");
 
-                entity.Property(e => e.CompanyPcId)
-                    .HasMaxLength(45)
-                    .HasColumnName("company_pcID");
+                entity.Property(e => e.EmployeeId).HasColumnName("employeeID");
 
                 entity.Property(e => e.CpuModel)
                     .HasMaxLength(45)
@@ -103,8 +85,6 @@ namespace Company.Models
                 entity.Property(e => e.DiskModel)
                     .HasMaxLength(45)
                     .HasColumnName("diskModel");
-
-                entity.Property(e => e.Idadmin).HasColumnName("IDAdmin");
 
                 entity.Property(e => e.MemoryModel).HasMaxLength(45);
 
@@ -121,10 +101,10 @@ namespace Company.Models
 
                 entity.Property(e => e.TotalMemory).HasColumnName("totalMemory");
 
-                entity.HasOne(d => d.IdadminNavigation)
-                    .WithMany(p => p.CompanyPcs)
-                    .HasForeignKey(d => d.Idadmin)
-                    .HasConstraintName("IDAdmin");
+                entity.HasOne(d => d.Employee)
+                    .WithOne(p => p.CompanyPc)
+                    .HasForeignKey<CompanyPc>(d => d.EmployeeId)
+                    .HasConstraintName("fk_COMPANY_PCS_EMPLOYEE1");
 
                 entity.HasOne(d => d.NameofCompanyNavigation)
                     .WithMany(p => p.CompanyPcs)
@@ -161,6 +141,8 @@ namespace Company.Models
                 entity.Property(e => e.FirstName)
                     .IsRequired()
                     .HasMaxLength(45);
+
+                entity.Property(e => e.IsAdmin).HasColumnType("tinyint");
 
                 entity.Property(e => e.LastName)
                     .IsRequired()
@@ -212,38 +194,6 @@ namespace Company.Models
                     .WithOne(p => p.MonthlyPaid)
                     .HasForeignKey<MonthlyPaid>(d => d.MonthlyPaidEmployeeId)
                     .HasConstraintName("fk_MONTHLY_PAID_EMPLOYEE1");
-            });
-
-            modelBuilder.Entity<PcUser>(entity =>
-            {
-                entity.HasKey(e => new { e.PcuserId, e.Username, e.PcId })
-                    .HasName("PRIMARY");
-
-                entity.ToTable("pc_user");
-
-                entity.HasIndex(e => e.PcuserId, "ID_idx");
-
-                entity.HasIndex(e => e.PcId, "pcid_idx");
-
-                entity.Property(e => e.PcuserId).HasColumnName("PCuserID");
-
-                entity.Property(e => e.Username)
-                    .HasMaxLength(45)
-                    .HasColumnName("username");
-
-                entity.Property(e => e.PcId)
-                    .HasMaxLength(45)
-                    .HasColumnName("pcID");
-
-                entity.HasOne(d => d.Pc)
-                    .WithMany(p => p.PcUsers)
-                    .HasForeignKey(d => d.PcId)
-                    .HasConstraintName("pcID");
-
-                entity.HasOne(d => d.Pcuser)
-                    .WithMany(p => p.PcUsers)
-                    .HasForeignKey(d => d.PcuserId)
-                    .HasConstraintName("PCuserID");
             });
 
             modelBuilder.Entity<Relative>(entity =>

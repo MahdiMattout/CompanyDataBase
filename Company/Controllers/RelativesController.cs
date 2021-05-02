@@ -57,5 +57,35 @@ namespace Company.Controllers
             _db.SaveChanges();
             return RedirectToAction("Details", "Employees", new { EmployeeId });
         }
+
+        public IActionResult Edit(int? EmployeeId, string RelativeName)
+        {
+            if (EmployeeId == null || RelativeName == null)
+            {
+                return NotFound();
+            }
+            var relative = _db.Relatives.Where(e => e.EmployeeId == EmployeeId && e.Name.Equals(RelativeName)).FirstOrDefault();
+            if (relative == null)
+            {
+                return NotFound();
+            }
+            return View(relative);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Edit(int EmployeeId, string RelativeName, [Bind("Name,Relationship")] Relative relative)
+        {
+            var relativeFromDb = _db.Relatives.Where(e => e.EmployeeId == EmployeeId && e.Name.Equals(RelativeName)).FirstOrDefault();
+            _db.Remove(relativeFromDb);
+            relative.EmployeeId = EmployeeId;
+            if (ModelState.IsValid)
+            {
+                _db.SaveChanges();
+                _db.Relatives.Add(relative);
+                _db.SaveChanges();
+                return RedirectToAction("Details", "Employees", new { EmployeeId });
+            }
+            return View(relative);
+        }
     }
 }
