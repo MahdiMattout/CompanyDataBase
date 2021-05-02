@@ -19,8 +19,15 @@ namespace Company.Controllers
         {
             return View();
         }
+        public IActionResult Create(string CompanyName)
+        {
+            ViewData["CompanyName"] = CompanyName;
+            return View();
+        }
         public IActionResult Details(int EmployeeId, string CompanyName)
         {
+            //var employee = _db.MonthlyPaids.Where(e => e.MonthlyEmployeeId == EmployeeId && e.MonthlyPaidCompanyName.Equals(CompanyName)).FirstOrDefault();
+            //return View(employee);
             return View();
         }
     }

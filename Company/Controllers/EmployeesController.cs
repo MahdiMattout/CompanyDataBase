@@ -13,22 +13,24 @@ namespace Company.Controllers
         {
             _db = db;
         }
-        public IActionResult Create(string CompanyName)
-        {
-            ViewData["CompanyName"] = CompanyName;
-            Console.WriteLine(ViewData["CompanyName"]);
-            return View();
-        }
+        //public IActionResult Create(string CompanyName)
+        //{
+        //    ViewData["CompanyName"] = CompanyName;
+        //    return View();
+        //}
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(string CompanyName, [Bind("EmployeeId,FirstName,LastName,Email,OfficeExtension,Address,OfficeNumber,Position,Ssn,CompanyName")] Employee employee)
+        public IActionResult Create(string CompanyName, [Bind("EmployeeId,FirstName,LastName,Email,OfficeExtension,Address,OfficeNumber,Position,Ssn")] Employee employee, [Bind("HourlyWage,OvertimeWage")] HourlyPaid hourlyPaid, [Bind("Salary,Bonus")] MonthlyPaid monthlyPaid)
         {
             employee.CompanyName = CompanyName;
+            if (monthlyPaid.Bonus != null)
+                employee.MonthlyPaid = monthlyPaid;
+            else
+                employee.HourlyPaid = hourlyPaid;
             if (ModelState.IsValid)
             {
                 _db.Add(employee);
                 _db.SaveChanges();
-
                 return RedirectToAction("Details", "Companies", new { Name = CompanyName });
             }
             return View(employee);
@@ -75,7 +77,7 @@ namespace Company.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int EmployeeId, string CompanyName, [Bind("EmployeeId,FirstName,LastName,Email,OfficeExtension,Address,OfficeNumber,Position,Ssn,CompanyName")] Employee employee)
+        public IActionResult Edit(int EmployeeId, string CompanyName, [Bind("EmployeeId,FirstName,LastName,Email,OfficeExtension,Address,OfficeNumber,Position,Ssn")] Employee employee)
         {
             if (EmployeeId != employee.EmployeeId)
             {
@@ -92,19 +94,6 @@ namespace Company.Controllers
                 return RedirectToAction("Details", "Companies", new { Name = CompanyName });
             }
             return View(employee);
-        }
-
-        public IActionResult Type(int EmployeeId, string CompanyName)
-        {
-            var HourlyPaid = _db.HourlyPaids.Where(e => e.HourlyEmployeeId == EmployeeId).FirstOrDefault();
-            if(HourlyPaid != null)
-            {
-                return RedirectToAction("Details", "HourlyPaidEmployee", new { EmployeeId, CompanyName });
-            }
-            else
-            {
-                return RedirectToAction("Details", "MonthlyPaidEmployee", new { EmployeeId, CompanyName });
-            }
         }
     }
 }
