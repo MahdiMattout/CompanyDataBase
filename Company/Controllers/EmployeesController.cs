@@ -57,14 +57,14 @@ namespace Company.Controllers
             _db.SaveChanges();
             return RedirectToAction("Details", "Companies", new { Name = CompanyName });
         }
-        public IActionResult Edit(int? EmployeeId, string CompanyName)
+        public IActionResult Edit(int? EmployeeId)
         {
             if (EmployeeId == null)
             {
                 return NotFound();
             }
 
-            var employee = _db.Employees.Find(EmployeeId, CompanyName);
+            var employee = _db.Employees.Find(EmployeeId);
             if (employee == null)
             {
                 return NotFound();
