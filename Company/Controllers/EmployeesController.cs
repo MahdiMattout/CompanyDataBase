@@ -91,5 +91,23 @@ namespace Company.Controllers
             }
             return View(employee);
         }
+
+        public IActionResult Details(int EmployeeId)
+        {
+            var employee = _db.Employees.Find(EmployeeId);
+            if(employee != null)
+            {
+                var hourlyPaid = _db.HourlyPaids.Find(EmployeeId);
+                if(hourlyPaid != null)
+                {
+                    return RedirectToAction("Details", "HourlyPaidEmployee", new { EmployeeId });
+                }
+                else
+                {
+                    return RedirectToAction("Details", "MonthlyPaidEmployee", new { EmployeeId });
+                }
+            }
+            return NotFound();
+        }
     }
 }

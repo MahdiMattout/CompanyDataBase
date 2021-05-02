@@ -24,11 +24,13 @@ namespace Company.Controllers
             ViewData["CompanyName"] = CompanyName;
             return View();
         }
-        public IActionResult Details(int EmployeeId, string CompanyName)
+        public IActionResult Details(int EmployeeId)
         {
-            //var employee = _db.HourlyPaids.Where(e => e.HourlyEmployeeId == EmployeeId && e.HourlyPaidCompanyName.Equals(CompanyName)).FirstOrDefault();
-            //return View(employee);
-            return View();
+            var hourlyPaidEmployee = _db.HourlyPaids.Find(EmployeeId);
+            if (hourlyPaidEmployee == null) return NotFound();
+            var employee = _db.Employees.Find(EmployeeId);
+            ViewData["Employee"] = employee;
+            return View(hourlyPaidEmployee);
         }
     }
 }
