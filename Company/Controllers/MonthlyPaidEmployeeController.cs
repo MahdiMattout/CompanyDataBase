@@ -29,6 +29,7 @@ namespace Company.Controllers
             var MonthlyPaidEmployee = _db.MonthlyPaids.Find(EmployeeId);
             if (MonthlyPaidEmployee == null) return NotFound();
             var employee = _db.Employees.Find(EmployeeId);
+            employee.Relatives = _db.Relatives.Where(e => e.EmployeeId == EmployeeId).ToList();
             ViewData["Employee"] = employee;
             return View(MonthlyPaidEmployee);
         }

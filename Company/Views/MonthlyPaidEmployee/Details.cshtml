@@ -26,7 +26,11 @@
             <br />
             @Html.DisplayNameFor(model => employee.Email)
             <br />
+            Relatives
+            <br />
             @Html.DisplayNameFor(model => employee.Address)
+            <a asp-controller="Relatives" asp-action="Create" asp-route-EmployeeId="@employee.EmployeeId"><input id="AddNewRelative" type="button" value="New Relative" class="btn btn-primary" /></a>
+
         </dt>
         <dd class="col-sm-10">
             Monthly Paid
@@ -44,6 +48,38 @@
             @Html.DisplayFor(model => employee.Email)
             <br />
             @Html.DisplayFor(model => employee.Address)
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            @Html.DisplayName("Name")
+                        </th>
+                        <th>
+                            @Html.DisplayName("Relationship")
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var relative in employee.Relatives)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => relative.Name)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => relative.Relationship)
+                            </td>
+                            <td>
+                                <a asp-controller="Relatives" asp-action="Edit" asp-route-EmployeeId="@employee.EmployeeId" asp-route-RelativeName="@relative.Name">Edit</a> |
+                                <a asp-controller="Relatives" asp-action="Delete" asp-route-EmployeeId="@employee.EmployeeId" asp-route-RelativeName="@relative.Name">Delete</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <br />
+
         </dd>
     </dl>
 </div>
