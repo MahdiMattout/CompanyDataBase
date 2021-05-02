@@ -32,5 +32,30 @@ namespace Company.Controllers
             }
             return View(relative);
         }
+
+        public IActionResult Delete(int? EmployeeId, string RelativeName)
+        {
+            if (EmployeeId == null)
+            {
+                return NotFound();
+            }
+
+            var relative = _db.Relatives.Where(e => e.EmployeeId == EmployeeId && RelativeName.Equals(e.Name)).FirstOrDefault();
+            if (relative == null)
+            {
+                return NotFound();
+            }
+
+            return View(relative);
+        }
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public IActionResult DeleteConfirmed(int EmployeeId, string RelativeName)
+        {
+            var relative = _db.Relatives.Where(e => e.EmployeeId == EmployeeId && RelativeName.Equals(e.Name)).FirstOrDefault();
+            _db.Relatives.Remove(relative);
+            _db.SaveChanges();
+            return RedirectToAction("Details", "Employees", new { EmployeeId });
+        }
     }
 }
