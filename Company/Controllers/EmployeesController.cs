@@ -28,12 +28,12 @@ namespace Company.Controllers
             {
                 _db.Add(employee);
                 _db.SaveChanges();
-                
+
                 return RedirectToAction("Details", "Companies", new { Name = CompanyName });
             }
             return View(employee);
         }
-        public  IActionResult Delete(int? EmployeeId, string CompanyName)
+        public IActionResult Delete(int? EmployeeId, string CompanyName)
         {
             if (EmployeeId == null)
             {
@@ -52,9 +52,9 @@ namespace Company.Controllers
         }
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public  IActionResult DeleteConfirmed(int EmployeeId, string CompanyName)
+        public IActionResult DeleteConfirmed(int EmployeeId, string CompanyName)
         {
-            var employee = _db.Employees.Find(EmployeeId,CompanyName);
+            var employee = _db.Employees.Find(EmployeeId, CompanyName);
             _db.Employees.Remove(employee);
             _db.SaveChanges();
             return RedirectToAction("Details", "Companies", new { Name = CompanyName });
@@ -66,7 +66,7 @@ namespace Company.Controllers
                 return NotFound();
             }
 
-            var employee = _db.Employees.Find(EmployeeId,CompanyName);
+            var employee = _db.Employees.Find(EmployeeId, CompanyName);
             if (employee == null)
             {
                 return NotFound();
@@ -85,13 +85,26 @@ namespace Company.Controllers
 
             if (ModelState.IsValid)
             {
-                    _db.Update(employee);
-                     _db.SaveChanges();
-                
-              
-                return RedirectToAction("Details", "Companies", new {Name = CompanyName });
+                _db.Update(employee);
+                _db.SaveChanges();
+
+
+                return RedirectToAction("Details", "Companies", new { Name = CompanyName });
             }
             return View(employee);
+        }
+
+        public IActionResult Type(int EmployeeId, string CompanyName)
+        {
+            var HourlyPaid = _db.HourlyPaids.Where(e => e.HourlyEmployeeId == EmployeeId).FirstOrDefault();
+            if(HourlyPaid != null)
+            {
+                return RedirectToAction("Details", "HourlyPaidEmployee", new { EmployeeId, CompanyName });
+            }
+            else
+            {
+                return RedirectToAction("Details", "MonthlyPaidEmployee", new { EmployeeId, CompanyName });
+            }
         }
     }
 }
