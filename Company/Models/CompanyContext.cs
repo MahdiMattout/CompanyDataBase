@@ -211,7 +211,6 @@ namespace Company.Models
                 entity.HasOne(d => d.MonthlyPaidEmployee)
                     .WithOne(p => p.MonthlyPaid)
                     .HasForeignKey<MonthlyPaid>(d => d.MonthlyPaidEmployeeId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("fk_MONTHLY_PAID_EMPLOYEE1");
             });
 

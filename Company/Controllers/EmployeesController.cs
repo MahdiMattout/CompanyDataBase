@@ -13,11 +13,7 @@ namespace Company.Controllers
         {
             _db = db;
         }
-        //public IActionResult Create(string CompanyName)
-        //{
-        //    ViewData["CompanyName"] = CompanyName;
-        //    return View();
-        //}
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Create(string CompanyName, [Bind("EmployeeId,FirstName,LastName,Email,OfficeExtension,Address,OfficeNumber,Position,Ssn")] Employee employee, [Bind("HourlyWage,OvertimeWage")] HourlyPaid hourlyPaid, [Bind("Salary,Bonus")] MonthlyPaid monthlyPaid)
@@ -56,7 +52,7 @@ namespace Company.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult DeleteConfirmed(int EmployeeId, string CompanyName)
         {
-            var employee = _db.Employees.Find(EmployeeId, CompanyName);
+            var employee = _db.Employees.Where(e => e.EmployeeId == EmployeeId).FirstOrDefault();
             _db.Employees.Remove(employee);
             _db.SaveChanges();
             return RedirectToAction("Details", "Companies", new { Name = CompanyName });
