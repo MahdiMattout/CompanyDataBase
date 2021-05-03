@@ -67,7 +67,7 @@ namespace Company.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Name,Country,City,PhoneNumber,ContactEmail")] Models.Company company)
+        public async Task<IActionResult> Create([Bind("Name,Country,City,Zip,PhoneNumber,ContactEmail")] Models.Company company)
         {
             if (ModelState.IsValid)
             {

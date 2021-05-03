@@ -9,8 +9,8 @@ namespace Company.Models
     {
         public int HourlyWage { get; set; }
         public int? OvertimeWage { get; set; }
-        public int HourlyEmployeeId { get; set; }
+        public int HourlyPaidEmployeeId { get; set; }
 
-        public virtual Employee HourlyEmployee { get; set; }
+        public virtual Employee HourlyPaidEmployee { get; set; }
     }
 }

@@ -1,69 +1,80 @@
 ﻿@model Employee
-
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Create";
 }
 
-<h1>Edit</h1>
+<h1>Create</h1>
 
-<h4>Person</h4>
+<h4>Employee</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Edit" asp-route-EmployeeId="@Model.EmployeeId" asp-route-CompanyName="@Model.CompanyName">
+        <form asp-controller="Employees" asp-action="Create" asp-route-CompanyName="@ViewData["CompanyName"]">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="EmployeeId" />
             <div class="form-group">
                 <label asp-for="FirstName" class="control-label"></label>
-                <input asp-for="FirstName" class="form-control" />
+                <input required asp-for="FirstName" class="form-control" />
                 <span asp-validation-for="FirstName" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="LastName" class="control-label"></label>
-                <input asp-for="LastName" class="form-control" />
+                <input required asp-for="LastName" class="form-control" />
                 <span asp-validation-for="LastName" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Email" class="control-label"></label>
-                <input asp-for="Email" class="form-control" />
+                <input required asp-for="Email" class="form-control" />
                 <span asp-validation-for="Email" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="OfficeExtension" class="control-label"></label>
-                <input asp-for="OfficeExtension" class="form-control" />
+                <input required asp-for="OfficeExtension" class="form-control" />
                 <span asp-validation-for="OfficeExtension" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Address" class="control-label"></label>
-                <input asp-for="Address" class="form-control" />
+                <input required asp-for="Address" class="form-control" />
                 <span asp-validation-for="Address" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="OfficeNumber" class="control-label"></label>
-                <input asp-for="OfficeNumber" class="form-control" />
+                <input required asp-for="OfficeNumber" class="form-control" />
                 <span asp-validation-for="OfficeNumber" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Position" class="control-label"></label>
-                <input asp-for="Position" class="form-control" />
+                <input required asp-for="Position" class="form-control" />
                 <span asp-validation-for="Position" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Ssn" class="control-label"></label>
-                <input asp-for="Ssn" class="form-control" />
+                <input required asp-for="Ssn" class="form-control" />
                 <span asp-validation-for="Ssn" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <label asp-for="MonthlyPaid.Salary" class="control-label"></label>
+                <input required asp-for="MonthlyPaid.Salary" class="form-control" />
+                <span asp-validation-for="MonthlyPaid.Salary" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MonthlyPaid.Bonus" class="control-label"></label>
+                <input required asp-for="MonthlyPaid.Bonus" class="form-control" />
+                <span asp-validation-for="MonthlyPaid.Bonus" class="text-danger"></span>
+            </div>
+            <div>Is this employee an admin?</div>
+            <label>
+                @Html.CheckBox("IsAdmin", true)
+            </label>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-controller="Companies" asp-action="Details" asp-route-Name="@Model.CompanyName">Back to List</a>
+    <a asp-controller="Companies" asp-action="Details" asp-route-Name="@ViewData["CompanyName"]">Back to List</a>
 </div>
-
 @*@section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

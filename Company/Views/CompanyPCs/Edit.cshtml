@@ -1,0 +1,79 @@
+﻿@model CompanyPc
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>PC</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit" asp-route-PcId="@Model.PcId" asp-route-CompanyName ="@Model.NameofCompany">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="AdminId" class="control-label"></label>
+                <input asp-for="AdminId" class="form-control" />
+                <span asp-validation-for="AdminId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EmployeeId" class="control-label"></label>
+                <input asp-for="EmployeeId" class="form-control" />
+                <span asp-validation-for="EmployeeId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CpuModel" class="control-label"></label>
+                <input asp-for="CpuModel" class="form-control" />
+                <span asp-validation-for="CpuModel" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Cpumanufacturer" class="control-label"></label>
+                <input asp-for="Cpumanufacturer" class="form-control" />
+                <span asp-validation-for="Cpumanufacturer" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ClockSpeed" class="control-label"></label>
+                <input asp-for="ClockSpeed" class="form-control" />
+                <span asp-validation-for="ClockSpeed" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DiskModel" class="control-label"></label>
+                <input asp-for="DiskModel" class="form-control" />
+                <span asp-validation-for="DiskModel" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DiskSpace" class="control-label"></label>
+                <input asp-for="DiskSpace" class="form-control" />
+                <span asp-validation-for="DiskSpace" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ReadWriteSpeed" class="control-label"></label>
+                <input asp-for="ReadWriteSpeed" class="form-control" />
+                <span asp-validation-for="ReadWriteSpeed" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MemoryModel" class="control-label"></label>
+                <input asp-for="MemoryModel" class="form-control" />
+                <span asp-validation-for="MemoryModel" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TotalMemory" class="control-label"></label>
+                <input asp-for="TotalMemory" class="form-control" />
+                <span asp-validation-for="TotalMemory" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-controller="CompanyPCs" asp-action="DisplayPCs" asp-route-CompanyName="@Model.NameofCompany">Back to List</a>
+</div>
+
+@*@section Scripts {
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    }
+*@

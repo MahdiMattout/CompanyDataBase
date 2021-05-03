@@ -13,27 +13,34 @@ namespace Company.Controllers
         {
             _db = db;
         }
-        public IActionResult Create(string CompanyName)
-        {
-            ViewData["CompanyName"] = CompanyName;
-            Console.WriteLine(ViewData["CompanyName"]);
-            return View();
-        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(string CompanyName, [Bind("EmployeeId,FirstName,LastName,Email,OfficeExtension,Address,OfficeNumber,Position,Ssn,CompanyName")] Employee employee)
+        public IActionResult Create(string CompanyName,string IsAdmin, [Bind("EmployeeId,FirstName,LastName,Email,OfficeExtension,Address,OfficeNumber,Position,Ssn")] Employee employee, [Bind("HourlyWage,OvertimeWage")] HourlyPaid hourlyPaid, [Bind("Salary,Bonus")] MonthlyPaid monthlyPaid)
         {
+            if(IsAdmin == "true")
+            {
+                employee.IsAdmin = 1;
+
+            }
+            else
+            {
+                employee.IsAdmin = 0;
+            }
             employee.CompanyName = CompanyName;
+            if (monthlyPaid.Bonus != null)
+                employee.MonthlyPaid = monthlyPaid;
+            else
+                employee.HourlyPaid = hourlyPaid;
             if (ModelState.IsValid)
             {
                 _db.Add(employee);
                 _db.SaveChanges();
-                
                 return RedirectToAction("Details", "Companies", new { Name = CompanyName });
             }
             return View(employee);
         }
-        public  IActionResult Delete(int? EmployeeId, string CompanyName)
+        public IActionResult Delete(int? EmployeeId, string CompanyName)
         {
             if (EmployeeId == null)
             {
@@ -52,21 +59,21 @@ namespace Company.Controllers
         }
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public  IActionResult DeleteConfirmed(int EmployeeId, string CompanyName)
+        public IActionResult DeleteConfirmed(int EmployeeId, string CompanyName)
         {
-            var employee = _db.Employees.Find(EmployeeId,CompanyName);
+            var employee = _db.Employees.Where(e => e.EmployeeId == EmployeeId).FirstOrDefault();
             _db.Employees.Remove(employee);
             _db.SaveChanges();
             return RedirectToAction("Details", "Companies", new { Name = CompanyName });
         }
-        public IActionResult Edit(int? EmployeeId, string CompanyName)
+        public IActionResult Edit(int? EmployeeId)
         {
             if (EmployeeId == null)
             {
                 return NotFound();
             }
 
-            var employee = _db.Employees.Find(EmployeeId,CompanyName);
+            var employee = _db.Employees.Find(EmployeeId);
             if (employee == null)
             {
                 return NotFound();
@@ -75,7 +82,7 @@ namespace Company.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int EmployeeId, string CompanyName, [Bind("EmployeeId,FirstName,LastName,Email,OfficeExtension,Address,OfficeNumber,Position,Ssn,CompanyName")] Employee employee)
+        public IActionResult Edit(int EmployeeId, string CompanyName, [Bind("EmployeeId,FirstName,LastName,Email,OfficeExtension,Address,OfficeNumber,Position,Ssn")] Employee employee)
         {
             if (EmployeeId != employee.EmployeeId)
             {
@@ -85,13 +92,31 @@ namespace Company.Controllers
 
             if (ModelState.IsValid)
             {
-                    _db.Update(employee);
-                     _db.SaveChanges();
-                
-              
-                return RedirectToAction("Details", "Companies", new {Name = CompanyName });
+                _db.Update(employee);
+                _db.SaveChanges();
+
+
+                return RedirectToAction("Details", "Companies", new { Name = CompanyName });
             }
             return View(employee);
+        }
+
+        public IActionResult Details(int EmployeeId)
+        {
+            var employee = _db.Employees.Find(EmployeeId);
+            if(employee != null)
+            {
+                var hourlyPaid = _db.HourlyPaids.Find(EmployeeId);
+                if(hourlyPaid != null)
+                {
+                    return RedirectToAction("Details", "HourlyPaidEmployee", new { EmployeeId });
+                }
+                else
+                {
+                    return RedirectToAction("Details", "MonthlyPaidEmployee", new { EmployeeId });
+                }
+            }
+            return NotFound();
         }
     }
 }
