@@ -8,6 +8,8 @@ namespace Company.Models
 {
     public partial class CompanyContext : DbContext
     {
+     
+
         public CompanyContext(DbContextOptions<CompanyContext> options)
             : base(options)
         {
@@ -25,7 +27,7 @@ namespace Company.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseMySQL("Server=localhost;port=5555;Database=Company;username=root;password=omar123");
+                optionsBuilder.UseMySQL("Server=localhost;port=3306;Database=Company;username=root;password=allaw1442001");
             }
         }
 
@@ -62,7 +64,7 @@ namespace Company.Models
 
             modelBuilder.Entity<CompanyPc>(entity =>
             {
-                entity.HasKey(e => e.EmployeeId)
+                entity.HasKey(e => e.PcId)
                     .HasName("PRIMARY");
 
                 entity.ToTable("company_pcs");
@@ -71,7 +73,9 @@ namespace Company.Models
 
                 entity.HasIndex(e => e.NameofCompany, "nameofCompany_idx");
 
-                entity.Property(e => e.EmployeeId).HasColumnName("employeeID");
+                entity.Property(e => e.PcId).HasColumnName("PcID");
+
+                entity.Property(e => e.AdminId).HasColumnName("AdminID");
 
                 entity.Property(e => e.CpuModel)
                     .HasMaxLength(45)
@@ -86,11 +90,11 @@ namespace Company.Models
                     .HasMaxLength(45)
                     .HasColumnName("diskModel");
 
+                entity.Property(e => e.EmployeeId).HasColumnName("employeeID");
+
                 entity.Property(e => e.MemoryModel).HasMaxLength(45);
 
-                entity.Property(e => e.NameOfUser)
-                    .IsRequired()
-                    .HasMaxLength(45);
+                entity.Property(e => e.NameOfUser).HasMaxLength(45);
 
                 entity.Property(e => e.NameofCompany)
                     .IsRequired()
@@ -102,8 +106,9 @@ namespace Company.Models
                 entity.Property(e => e.TotalMemory).HasColumnName("totalMemory");
 
                 entity.HasOne(d => d.Employee)
-                    .WithOne(p => p.CompanyPc)
-                    .HasForeignKey<CompanyPc>(d => d.EmployeeId)
+                    .WithMany(p => p.CompanyPcs)
+                    .HasForeignKey(d => d.EmployeeId)
+                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("fk_COMPANY_PCS_EMPLOYEE1");
 
                 entity.HasOne(d => d.NameofCompanyNavigation)

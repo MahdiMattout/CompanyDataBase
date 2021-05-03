@@ -19,7 +19,9 @@ namespace Company.Models
         public float DiskSpace { get; set; }
         public string DiskModel { get; set; }
         public float ReadWriteSpeed { get; set; }
-        public int EmployeeId { get; set; }
+        public int? EmployeeId { get; set; }
+        public int PcId { get; set; }
+        public int AdminId { get; set; }
 
         public virtual Employee Employee { get; set; }
         public virtual Company NameofCompanyNavigation { get; set; }

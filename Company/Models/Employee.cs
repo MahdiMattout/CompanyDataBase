@@ -9,6 +9,7 @@ namespace Company.Models
     {
         public Employee()
         {
+            CompanyPcs = new HashSet<CompanyPc>();
             Relatives = new HashSet<Relative>();
         }
 
@@ -25,9 +26,9 @@ namespace Company.Models
         public byte IsAdmin { get; set; }
 
         public virtual Company CompanyNameNavigation { get; set; }
-        public virtual CompanyPc CompanyPc { get; set; }
         public virtual HourlyPaid HourlyPaid { get; set; }
         public virtual MonthlyPaid MonthlyPaid { get; set; }
+        public virtual ICollection<CompanyPc> CompanyPcs { get; set; }
         public virtual ICollection<Relative> Relatives { get; set; }
     }
 }

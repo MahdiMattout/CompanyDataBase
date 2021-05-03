@@ -61,6 +61,10 @@
                 <input required asp-for="HourlyPaid.OvertimeWage" class="form-control" />
                 <span asp-validation-for="HourlyPaid.OvertimeWage" class="text-danger"></span>
             </div>
+            <div>Is this employee an admin?</div>
+            <label>
+                @Html.CheckBox("IsAdmin",true)
+            </label>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
