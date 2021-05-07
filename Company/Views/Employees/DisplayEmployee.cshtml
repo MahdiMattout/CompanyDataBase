@@ -1,0 +1,60 @@
+﻿@model Employee
+@{List<Employee> Employees = ViewData["Employee"] as List<Employee>;}
+<h1>
+    View for Employees
+</h1>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayName("First Name")
+            </th>
+            <th>
+                @Html.DisplayName("Last Name")
+            </th>
+            <th>
+                @Html.DisplayName("Email")
+            </th>
+            <th>
+                @Html.DisplayName("Office Extension")
+            </th>
+            <th>
+                @Html.DisplayName("Office Number")
+            </th>
+            <th>
+                @Html.DisplayName("Position")
+            </th>
+            <th>
+                @Html.DisplayName("Company")
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Employees)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FirstName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LastName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OfficeExtension)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OfficeNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Position)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CompanyName)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
