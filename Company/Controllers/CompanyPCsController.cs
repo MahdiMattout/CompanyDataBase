@@ -3,10 +3,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Web;
+using System.ComponentModel.DataAnnotations;
 using Company.Models;
-
 namespace Company.Controllers
 {
+
     public class CompanyPCsController : Controller
     {
         private readonly CompanyContext _db;
@@ -34,10 +36,7 @@ namespace Company.Controllers
         {
             var admin = _db.Employees.Where(e => e.EmployeeId == companyPc.AdminId && e.IsAdmin == 1).FirstOrDefault();
             var employee = _db.Employees.Where(e => e.EmployeeId == companyPc.EmployeeId).FirstOrDefault();
-            if (admin == null)
-            {
-                return NotFound();
-            }
+            
             if (employee!= null)
             {
                 companyPc.NameOfUser = $"{employee.FirstName} {employee.LastName}";
@@ -55,17 +54,17 @@ namespace Company.Controllers
         }
         public IActionResult Delete(int? PcId)
         {
-            if (PcId == null)
+            /*if (PcId == null)
             {
                 return NotFound();
-            }
+            }*/
 
             var companypc = _db.CompanyPcs
                 .FirstOrDefault(m => m.PcId == PcId);
-            if (companypc == null)
+            /*if (companypc == null)
             {
                 return NotFound();
-            }
+            }*/
 
             return View(companypc);
         }
@@ -80,26 +79,17 @@ namespace Company.Controllers
         }
         public IActionResult Edit(int? PcId)
         {
-            if (PcId == null)
-            {
-                return NotFound();
-            }
+            
 
             var companypc = _db.CompanyPcs.Find(PcId);
-            if (companypc == null)
-            {
-                return NotFound();
-            }
+            
             return View(companypc);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Edit(int PcId,string CompanyName,[Bind("PcId,AdminId,EmployeeId,CpuModel,Cpumanufacturer,ClockSpeed,DiskModel,DiskSpace,ReadWriteSpeed,MemoryModel,TotalMemory")] CompanyPc companyPc)
         {
-            if (PcId != companyPc.PcId)
-            {
-                return NotFound();
-            }
+            
             companyPc.NameofCompany = CompanyName;
             var employee = _db.Employees.Where(e => e.EmployeeId == companyPc.EmployeeId).FirstOrDefault();
             companyPc.AverageCpuUsage = new Random().Next(0, 100);
@@ -117,6 +107,10 @@ namespace Company.Controllers
                 return RedirectToAction("DisplayPCs", "CompanyPCs", new { CompanyName });
             }
             return View(companyPc);
+        }
+        public IActionResult Error()
+        {
+            return View();
         }
 
     }
