@@ -4,8 +4,10 @@
 
 @{List<CompanyPc> CompanyPCs = ViewData["CompanyPCs"] as List<CompanyPc>;}
 
+<a asp-controller="CompanyPCs" asp-action="DisplayDangerousPcs" asp-route-CompanyName=@ViewData["CompanyName"]><input id="ViewDangerousPCs" type="button" value="View Dangerous PCs" class="btn btn-primary" /></a>
+
 <p>
-    <a asp-controller="CompanyPCs" asp-action="Create" asp-route-CompanyName ="@ViewData["CompanyName"]">Create New</a>
+    <a asp-controller="CompanyPCs" asp-action="Create" asp-route-CompanyName="@ViewData["CompanyName"]">Create New</a>
 </p>
 <div>
     <a asp-controller="Companies" asp-action="Details" asp-route-Name="@ViewData["CompanyName"]">Back to List</a>
@@ -64,54 +66,54 @@
         {
             foreach (var item in CompanyPCs)
             {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.PcId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.AdminId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EmployeeId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.NameOfUser)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CpuModel)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Cpumanufacturer)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ClockSpeed)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DiskModel)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DiskSpace)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ReadWriteSpeed)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MemoryModel)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TotalMemory)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.AverageCpuUsage)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.AverageMemoryUsage)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-PcId="@item.PcId">Edit</a> |
-                <a asp-action="Delete" asp-route-PcId="@item.PcId">Delete</a>
-            </td>
-        </tr>
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PcId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.AdminId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EmployeeId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NameOfUser)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CpuModel)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Cpumanufacturer)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ClockSpeed)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DiskModel)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DiskSpace)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ReadWriteSpeed)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.MemoryModel)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TotalMemory)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.AverageCpuUsage)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.AverageMemoryUsage)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-PcId="@item.PcId">Edit</a> |
+                        <a asp-action="Delete" asp-route-PcId="@item.PcId">Delete</a>
+                    </td>
+                </tr>
             }
         }
     </tbody>

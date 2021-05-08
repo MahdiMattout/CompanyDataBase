@@ -43,7 +43,8 @@ namespace Company.Controllers
             }
             companyPc.NameofCompany = CompanyName;
             companyPc.AverageCpuUsage =new Random().Next(0,100);
-            companyPc.AverageMemoryUsage = new Random().Next(0, 100); 
+            companyPc.AverageMemoryUsage = new Random().Next(0, 100);
+            companyPc.AverageCpuUsage = 85;
             if (ModelState.IsValid)
             {
                 _db.Add(companyPc);
@@ -108,9 +109,11 @@ namespace Company.Controllers
             }
             return View(companyPc);
         }
-        public IActionResult Error()
+        public IActionResult DisplayDangerousPcs(string CompanyName)
         {
-            return View();
+            var pcs = _db.DangerousPcsViews.ToList();
+            ViewData["CompanyName"] = CompanyName;
+            return View(pcs);
         }
 
     }
