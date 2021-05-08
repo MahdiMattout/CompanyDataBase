@@ -1,0 +1,39 @@
+﻿@model List<HealthyPc>
+
+@{
+
+}
+
+<div>
+    <h4>PCs</h4>
+    <hr />
+    <dl class="row">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayName("PcId")
+                    </th>
+                    <th>
+                        @Html.DisplayName("Cpu")
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PcId)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.AverageCpuUsage)
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </dl>
+</div>
+<div>
+    <a asp-controller="CompanyPCs" asp-action="DisplayPCs" asp-route-CompanyName=@ViewData["CompanyName"]>Back to list</a>

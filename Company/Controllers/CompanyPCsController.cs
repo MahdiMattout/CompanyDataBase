@@ -111,10 +111,22 @@ namespace Company.Controllers
         }
         public IActionResult DisplayDangerousPcs(string CompanyName)
         {
-            var pcs = _db.DangerousPcsViews.ToList();
+            var pcs = _db.DangerousPcsViews.Where(pc=> pc.NameofCompany.Equals(CompanyName)).ToList();
             ViewData["CompanyName"] = CompanyName;
             return View(pcs);
         }
-
+        public IActionResult DisplayHealthyPcs(string CompanyName)
+        {
+            var pcs = _db.HealthyPcs.Where(pc=> pc.NameofCompany.Equals(CompanyName)).ToList();
+            ViewData["CompanyName"] = CompanyName;
+            return View(pcs);
+        }
+        public IActionResult DisplayAdminsOfDangerousPCs(string CompanyName)
+        {
+            var admins = _db.AdminsOfDangerousPcs.Where(admin => admin.CompanyName.Equals(CompanyName)).ToList();
+            ViewData["CompanyName"] = CompanyName;
+            return View(admins);
+        }
+       
     }
 }

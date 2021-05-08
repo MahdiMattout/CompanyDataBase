@@ -130,5 +130,23 @@ namespace Company.Controllers
             company.Employees = _db.Employees.Select(p => p).Where(x => x.CompanyName == company.Name).ToList();
             return View(company);
         }
+        public IActionResult DisplayLowSalaryEmployees(string CompanyName)
+        {
+            var employyesInSpecificCompany = _db.Employees.Where(employee => employee.CompanyName.Equals(CompanyName)).ToList();
+            var employees = _db.CountRelativesOfLowSalaryEmployees.ToList();
+            var LowSalaryEmployeesInCompany = new List<CountRelativesOfLowSalaryEmployee>();
+            foreach (var employee in employees)
+            {
+                foreach (var employeeInCompany in employyesInSpecificCompany)
+                {
+                    if (employeeInCompany.EmployeeId == employee.EmployeeId)
+                    {
+                        LowSalaryEmployeesInCompany.Add(employee);
+                    }
+                }
+            }
+            ViewData["CompanyName"] = CompanyName;
+            return View(LowSalaryEmployeesInCompany);
+        }
     }
 }

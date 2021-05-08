@@ -5,7 +5,8 @@
 @{List<CompanyPc> CompanyPCs = ViewData["CompanyPCs"] as List<CompanyPc>;}
 
 <a asp-controller="CompanyPCs" asp-action="DisplayDangerousPcs" asp-route-CompanyName=@ViewData["CompanyName"]><input id="ViewDangerousPCs" type="button" value="View Dangerous PCs" class="btn btn-primary" /></a>
-
+<a asp-controller="CompanyPCs" asp-action="DisplayHealthyPcs" asp-route-CompanyName=@ViewData["CompanyName"]><input id="ViewHealthyPCs" type="button" value="View Healthy PCs" class="btn btn-primary" /></a>
+<a asp-controller="CompanyPCs" asp-action="DisplayAdminsOfDangerousPCs" asp-route-CompanyName=@ViewData["CompanyName"]><input id="ViewAdminsOfDangerousPCs" type="button" value="View Admins of Dangerous PCs" class="btn btn-primary" /></a>
 <p>
     <a asp-controller="CompanyPCs" asp-action="Create" asp-route-CompanyName="@ViewData["CompanyName"]">Create New</a>
 </p>
