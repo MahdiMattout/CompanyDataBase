@@ -23,7 +23,18 @@ namespace Company.Controllers
             ViewData["Companies"] = companies;
             return View();
         }
+        [HttpGet]
+        public async Task<IActionResult> Index(string CompanySearch)
+        { ViewData["GetCompanies"] = CompanySearch;
+            var companyquery = from x in _db.Companies select x;
+            if (!String.IsNullOrEmpty(CompanySearch))
+            {
+               companyquery = companyquery.Where(x => x.Name.Contains(CompanySearch) || x.ContactEmail.Contains(CompanySearch));
+            }
+            ViewData["Companies"] = await companyquery.AsNoTracking().ToListAsync();
+            return View();
 
+        }
         public IActionResult Edit(string? name)
         {
             if (name == null)
