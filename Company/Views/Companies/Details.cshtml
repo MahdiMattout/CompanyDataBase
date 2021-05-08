@@ -21,7 +21,7 @@
             <a asp-controller="MonthlyPaidEmployee" asp-action="Create" asp-route-CompanyName="@Model.Name"><input id="AddNewEmployee" type="button" value="New Monthly Paid Employee" class="btn btn-primary" /></a>
             <a asp-controller="HourlyPaidEmployee" asp-action="Create" asp-route-CompanyName="@Model.Name"><input id="AddNewEmployee" type="button" value="New Hourly Paid Employee" class="btn btn-primary" /></a>
             <a asp-controller="CompanyPCs" asp-action="DisplayPCs" asp-route-CompanyName="@Model.Name"><input id="ViewPCs" type="button" value="ViewPcs" class="btn btn-primary" /></a>
-            <a asp-controller="Employees" asp-action="DisplayEmployee" asp-route-CompanyName="@Model.Name"><input id="ViewEmployee" type="button" value="View For Employee" class="btn btn-primary"/></a>
+            <a asp-controller="Companies" asp-action="DisplayLowSalaryEmployees" asp-route-CompanyName="@Model.Name"><input id="ViewLowSalaryEmployees" type="button" value="View Low Salary Employees" class="btn btn-primary" /></a>
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Country)

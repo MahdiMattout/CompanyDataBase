@@ -118,11 +118,12 @@ namespace Company.Controllers
             }
             return NotFound();
         }
+
         public IActionResult DisplayEmployee(string Companyname)
         {
-            var employees = _db.Employees.Where(p => p.CompanyName.Equals(Companyname)).ToList();
-            ViewData["Employee"] = employees;
-            ViewData["CompanyName"] = Companyname;
+            var dpc = _db.DangerousPcsViews.ToList();
+            ViewData["DangerousPcs"] = dpc;
+
             return View();
         }
     }

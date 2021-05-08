@@ -1,0 +1,39 @@
+﻿@model List<CountRelativesOfLowSalaryEmployee>
+
+@{
+
+}
+
+<div>
+    <h4>PCs</h4>
+    <hr />
+    <dl class="row">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayName("EmployeeID")
+                    </th>
+                    <th>
+                        @Html.DisplayName("Number Of Relatives")
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.EmployeeId)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CountRelativesName)
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </dl>
+</div>
+<div>
+    <a asp-controller="Companies" asp-action="Details" asp-route-name=@ViewData["CompanyName"]>Back to list</a>

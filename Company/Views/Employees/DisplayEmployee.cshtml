@@ -1,6 +1,8 @@
 ﻿@model Employee
 @{List<Employee> Employees = ViewData["Employee"] as List<Employee>;}
-<h1>
+@{List<DangerousPcsView> dpc = ViewData["DangerousPcs"] as List<DangerousPcsView>;}
+
+@*<h1>
     View for Employees
 </h1>
 <table class="table">
@@ -57,4 +59,14 @@
             </tr>
         }
     </tbody>
-</table>
+</table>*@
+<ul>
+    @{ 
+        foreach(var x in dpc)
+        {
+            <li>
+                @x.ClockSpeed;
+            </li>
+        }
+    }
+</ul> 
