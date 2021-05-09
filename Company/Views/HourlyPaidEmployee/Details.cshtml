@@ -65,16 +65,22 @@
         </div>
     </div>
 
-    <br/>
+    <br />
 
     <div>
         <b>Relatives</b>
         <div class="float-right">
             <a asp-controller="Relatives" asp-action="Create" asp-route-EmployeeId="@employee.EmployeeId"><input id="AddNewRelative" type="button" value="Add New Relative" class="btn btn-info" /></a>
-         </div>
+        </div>
     </div>
-    <br/>
-
+    <br />
+    <form method="post" asp-controller="HourlyPaidEmployee" asp-action="Details" asp-route-EmployeeId="@Model.HourlyPaidEmployeeId">
+        <p>
+            <input style="width:300px" type="search" placeholder="Search for Relative by Relationship" value="@ViewData["Relationship"]" name="Relationship" />
+            <input type="submit" value="Search" class="btn btn-primary" />
+            <a asp-controller="HourlyPaidEmployee" asp-action="Details" asp-route-EmployeeId="@Model.HourlyPaidEmployeeId">Get All Relatives</a>
+        </p>
+    </form>
     <table class="table bg-white table-striped table-bordered table-condensed table-hover">
         <thead class="thead-dark">
             <tr>
@@ -105,7 +111,7 @@
             }
         </tbody>
     </table>
-            <br />
+    <br />
 </div>
 <br/>
 <div>

@@ -130,23 +130,23 @@ namespace Company.Controllers
             company.Employees = _db.Employees.Select(p => p).Where(x => x.CompanyName == company.Name).ToList();
             return View(company);
         }
-        [HttpGet]
+        [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Details(string? CompanyName, string EmployeeFirstName)
+        public IActionResult Details(string? Name, string EmployeeFirstName)
         {
             ViewData["GetEmployees"] = EmployeeFirstName;
-            if (CompanyName == null)
+            if (Name == null)
             {
                 return NotFound();
             }
 
             var company = _db.Companies
-                .FirstOrDefault(m => m.Name == CompanyName);
+                .FirstOrDefault(m => m.Name == Name);
             if (company == null)
             {
                 return NotFound();
             }
-            company.Employees = _db.Employees.Select(p => p).Where(x => x.CompanyName == company.Name && x.CompanyName.Contains(EmployeeFirstName)).ToList();
+            company.Employees = _db.Employees.Select(p => p).Where(x => x.CompanyName.Equals(company.Name) && x.FirstName.Equals(EmployeeFirstName)).ToList();
             return View(company);
         }
         public IActionResult DisplayLowSalaryEmployees(string CompanyName)

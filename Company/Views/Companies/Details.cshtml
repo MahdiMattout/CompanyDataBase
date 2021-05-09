@@ -71,9 +71,9 @@
 
     <br />
 
-    <form method="get" asp-controller="Companies" asp-action="Details" asp-route-CompanyName="@Model.Name" asp-route-EmployeeFirstName="@ViewData["GetEmployees"]">
+    <form method ="post" asp-controller="Companies" asp-action="Details" asp-route-Name="@Model.Name">
         <p>
-            <input style="width:300px" type="search" placeholder="Search for employees by Name" value="wefew" name="EmployeeFirstName"  />
+            <input style="width:300px" type="search" placeholder="Search for Employees by First Name" value="@ViewData["GetEmployees"]" name="EmployeeFirstName" />
             <input type="submit" value="Search" class="btn btn-primary" />
             <a asp-controller="Companies" asp-action="Details" asp-route-name="@Model.Name">Get All Employees</a>
         </p>

@@ -33,5 +33,17 @@ namespace Company.Controllers
             ViewData["Employee"] = employee;
             return View(hourlyPaidEmployee);
         }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Details(int? EmployeeId, string Relationship)
+        {
+            ViewData["Relationship"] = Relationship;
+            var HourlyPaidEmployee = _db.HourlyPaids.Find(EmployeeId);
+            if (HourlyPaidEmployee == null) return NotFound();
+            var employee = _db.Employees.Find(EmployeeId);
+            employee.Relatives = _db.Relatives.Select(p => p).Where(x => x.EmployeeId.Equals(employee.EmployeeId) && x.Relationship.Equals(Relationship)).ToList();
+            ViewData["Employee"] = employee;
+            return View(HourlyPaidEmployee);
+        }
     }
 }
