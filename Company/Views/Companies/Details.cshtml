@@ -4,108 +4,144 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
-
-<div>
-    <h4>@Html.DisplayFor(model => model.Name)</h4>
+<div class="container">
+    <h2>@Html.DisplayFor(model => model.Name)</h2>
+    <h5>Details</h5>
     <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Country)
-            <br />
-            @Html.DisplayNameFor(model => model.City)
-            <br />
-            @Html.DisplayNameFor(model => model.PhoneNumber)
-            <br />
-            @Html.DisplayNameFor(model => model.ContactEmail)
-            <a asp-controller="MonthlyPaidEmployee" asp-action="Create" asp-route-CompanyName="@Model.Name"><input id="AddNewEmployee" type="button" value="New Monthly Paid Employee" class="btn btn-primary" /></a>
-            <a asp-controller="HourlyPaidEmployee" asp-action="Create" asp-route-CompanyName="@Model.Name"><input id="AddNewEmployee" type="button" value="New Hourly Paid Employee" class="btn btn-primary" /></a>
-            <a asp-controller="CompanyPCs" asp-action="DisplayPCs" asp-route-CompanyName="@Model.Name"><input id="ViewPCs" type="button" value="ViewPcs" class="btn btn-primary" /></a>
-            <a asp-controller="Companies" asp-action="DisplayLowSalaryEmployees" asp-route-CompanyName="@Model.Name"><input id="ViewLowSalaryEmployees" type="button" value="View Low Salary Employees" class="btn btn-primary" /></a>
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Country)
-            <br />
-            @Html.DisplayFor(model => model.City)
-            <br />
-            @Html.DisplayFor(model => model.PhoneNumber)
-            <br />
-            @Html.DisplayFor(model => model.ContactEmail)
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>
-                            @Html.DisplayName("Employee ID")
-                        </th>
-                        <th>
-                            @Html.DisplayName("First Name")
-                        </th>
-                        <th>
-                            @Html.DisplayName("Last Name")
-                        </th>
-                        <th>
-                            @Html.DisplayName("Email")
-                        </th>
-                        <th>
-                            @Html.DisplayName("Office Extension")
-                        </th>
-                        <th>
-                            @Html.DisplayName("Address")
-                        </th>
-                        <th>
-                            @Html.DisplayName("Office Number")
-                        </th>
-                        <th>
-                            @Html.DisplayName("Position")
-                        </th>
-                        <th>
-                            @Html.DisplayName("SSN")
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var item in Model.Employees)
-                    {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.EmployeeId)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.FirstName)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.LastName)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Email)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.OfficeExtension)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Address)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.OfficeNumber)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Position)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Ssn)
-                        </td>
-                        <td>
-                            <a asp-controller="Employees" asp-action="Edit" asp-route-EmployeeId="@item.EmployeeId" asp-route-CompanyName="@Model.Name">Edit</a> |
-                            <a asp-controller="Employees" asp-action="Details" asp-route-EmployeeId="@item.EmployeeId" asp-route-CompanyName="@Model.Name">Details</a> |
-                            <a asp-controller="Employees" asp-action="Delete" asp-route-EmployeeId="@item.EmployeeId" asp-route-CompanyName="@Model.Name">Delete</a>
 
-                        </td>
-                    </tr>
-                    }
-                </tbody>
-            </table>
-            <br />
-        </dd>
+    <div class="row">
+        <div class="col-sm">
+            <dl class="dl-horizontal">
+                <dt>
+                    Country
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Country)
+                </dd>
+
+                <dt>
+                    City
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.City)
+                </dd>
+
+                <dt>
+                    Phone Number
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.PhoneNumber)
+                </dd>
+
+                <dt>
+                    Contact Email
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.ContactEmail)
+                </dd>
+            </dl>
+        </div>
+
+        <div class="col-sm">
+
+            <dl class="dl-horizontal">
+                <dt>Add a new employee:</dt>
+                <dd>
+                    <a asp-controller="MonthlyPaidEmployee" asp-action="Create" asp-route-CompanyName="@Model.Name"><input id="AddNewEmployee" type="button" value="Monthly Paid" class="btn btn-primary float-left" /></a>
+                    <p class="float-left font-weight-bold"> &nbsp;&nbsp; or &nbsp;&nbsp; </p>
+                    <a asp-controller="HourlyPaidEmployee" asp-action="Create" asp-route-CompanyName="@Model.Name"><input id="AddNewEmployee" type="button" value="Hourly Paid" class="btn btn-primary" /></a>
+                    <br />
+                </dd>
+                <br />
+                <br />
+
+                <dt>View more information:</dt>
+                <dd>
+                    <a asp-controller="CompanyPCs" asp-action="DisplayPCs" asp-route-CompanyName="@Model.Name"><input id="ViewPCs" type="button" value="View Employees' Pcs" class="btn btn-primary" /></a>
+                    <br />
+                    <a asp-controller="Employees" asp-action="DisplayEmployee" asp-route-CompanyName="@Model.Name"><input id="ViewEmployee" type="button" value="View Employees" class="btn btn-primary" /></a>
+
+                </dd>
+            </dl>
+        </div>
+    </div>
+
+    <br />
+
+    <table class="table bg-white table-striped table-bordered table-condensed table-hover">
+        <thead class="thead-dark">
+            <tr>
+                <th>
+                    @Html.DisplayName("Employee ID")
+                </th>
+                <th>
+                    @Html.DisplayName("First Name")
+                </th>
+                <th>
+                    @Html.DisplayName("Last Name")
+                </th>
+                <th>
+                    @Html.DisplayName("Email")
+                </th>
+                <th>
+                    @Html.DisplayName("Office Extension")
+                </th>
+                <th>
+                    @Html.DisplayName("Address")
+                </th>
+                <th>
+                    @Html.DisplayName("Office Number")
+                </th>
+                <th>
+                    @Html.DisplayName("Position")
+                </th>
+                <th>
+                    @Html.DisplayName("SSN")
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Employees)
+            {
+                <tr>
+                    <td style="font-weight: bold">
+                        @Html.DisplayFor(modelItem => item.EmployeeId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FirstName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LastName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Email)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.OfficeExtension)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Address)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.OfficeNumber)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Position)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Ssn)
+                    </td>
+                    <td>
+                        <a asp-controller="Employees" asp-action="Edit" asp-route-EmployeeId="@item.EmployeeId" asp-route-CompanyName="@Model.Name">Edit</a> |
+                        <a asp-controller="Employees" asp-action="Details" asp-route-EmployeeId="@item.EmployeeId" asp-route-CompanyName="@Model.Name">Details</a> |
+                        <a asp-controller="Employees" asp-action="Delete" asp-route-EmployeeId="@item.EmployeeId" asp-route-CompanyName="@Model.Name">Delete</a>
+
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
     </dl>
 </div>
 <div>
