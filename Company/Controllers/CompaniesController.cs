@@ -25,15 +25,15 @@ namespace Company.Controllers
         }
         [HttpGet]
         public async Task<IActionResult> Index(string CompanySearch)
-        { ViewData["GetCompanies"] = CompanySearch;
+        { 
+            ViewData["GetCompanies"] = CompanySearch;
             var companyquery = from x in _db.Companies select x;
             if (!String.IsNullOrEmpty(CompanySearch))
             {
-               companyquery = companyquery.Where(x => x.Name.Contains(CompanySearch) || x.ContactEmail.Contains(CompanySearch));
+               companyquery = companyquery.Where(x => x.Name.Contains(CompanySearch));
             }
             ViewData["Companies"] = await companyquery.AsNoTracking().ToListAsync();
             return View();
-
         }
         public IActionResult Edit(string? name)
         {
@@ -114,7 +114,7 @@ namespace Company.Controllers
             _db.SaveChanges();
             return RedirectToAction(nameof(Index));
         }
-        public  IActionResult Details(string? name)
+        public IActionResult Details(string? name)
         {
             if (name == null)
             {
@@ -128,6 +128,25 @@ namespace Company.Controllers
                 return NotFound();
             }
             company.Employees = _db.Employees.Select(p => p).Where(x => x.CompanyName == company.Name).ToList();
+            return View(company);
+        }
+        [HttpGet]
+        [ValidateAntiForgeryToken]
+        public IActionResult Details(string? CompanyName, string EmployeeFirstName)
+        {
+            ViewData["GetEmployees"] = EmployeeFirstName;
+            if (CompanyName == null)
+            {
+                return NotFound();
+            }
+
+            var company = _db.Companies
+                .FirstOrDefault(m => m.Name == CompanyName);
+            if (company == null)
+            {
+                return NotFound();
+            }
+            company.Employees = _db.Employees.Select(p => p).Where(x => x.CompanyName == company.Name && x.CompanyName.Contains(EmployeeFirstName)).ToList();
             return View(company);
         }
         public IActionResult DisplayLowSalaryEmployees(string CompanyName)

@@ -21,12 +21,20 @@ namespace Company.Controllers
         public IActionResult DisplayPcs(string CompanyName)
         {
             var companypcs = _db.CompanyPcs.Where(p=>p.NameofCompany.Equals(CompanyName)).ToList();
+            foreach(var pc in companypcs)
+            {
+                pc.AverageCpuUsage = new Random().Next(0, 100);
+                pc.AverageMemoryUsage = new Random().Next(0, 100);
+            }
+            _db.SaveChanges();
             ViewData["CompanyPCs"] = companypcs;
             ViewData["CompanyName"] = CompanyName;
             return View();
         }
         public IActionResult Create(string CompanyName)
         {
+            ViewData["AdminId"] = "";
+            ViewData["EmployeeId"] = "";
             ViewData["CompanyName"] = CompanyName;
             return View();
         }
@@ -34,23 +42,36 @@ namespace Company.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Create(string CompanyName,[Bind("PcId,AdminId,EmployeeId,CpuModel,Cpumanufacturer,ClockSpeed,DiskModel,DiskSpace,ReadWriteSpeed,MemoryModel,TotalMemory")] CompanyPc companyPc)
         {
-            var admin = _db.Employees.Where(e => e.EmployeeId == companyPc.AdminId && e.IsAdmin == 1).FirstOrDefault();
-            var employee = _db.Employees.Where(e => e.EmployeeId == companyPc.EmployeeId).FirstOrDefault();
-            
-            if (employee!= null)
+            var admin = _db.Employees.Where(e => e.EmployeeId == companyPc.AdminId && e.IsAdmin == 1 && e.CompanyName.Equals(CompanyName)).FirstOrDefault();
+            var employee = _db.Employees.Where(e => e.EmployeeId == companyPc.EmployeeId && e.CompanyName.Equals(CompanyName)).FirstOrDefault();
+
+            if (employee != null)
             {
                 companyPc.NameOfUser = $"{employee.FirstName} {employee.LastName}";
             }
+            else
+            {
+                companyPc.EmployeeId = -1;
+                ViewData["EmployeeId"] = "-1";
+                ViewData["CompanyName"] = CompanyName;
+                return View(companyPc);
+            }
+            if(admin == null)
+            {
+                ViewData["AdminId"] = "-1";
+                ViewData["CompanyName"] = CompanyName;
+                return View(companyPc);
+            }
             companyPc.NameofCompany = CompanyName;
-            companyPc.AverageCpuUsage =new Random().Next(0,100);
+            companyPc.AverageCpuUsage = new Random().Next(0,100);
             companyPc.AverageMemoryUsage = new Random().Next(0, 100);
-            companyPc.AverageCpuUsage = 85;
             if (ModelState.IsValid)
             {
                 _db.Add(companyPc);
                 _db.SaveChanges();
                 return RedirectToAction("DisplayPCs", "CompanyPCs", new {CompanyName });
             }
+            ViewData["CompanyName"] = CompanyName;
             return View(companyPc);
         }
         public IActionResult Delete(int? PcId)
@@ -124,6 +145,7 @@ namespace Company.Controllers
         public IActionResult DisplayAdminsOfDangerousPCs(string CompanyName)
         {
             var admins = _db.AdminsOfDangerousPcs.Where(admin => admin.CompanyName.Equals(CompanyName)).ToList();
+
             ViewData["CompanyName"] = CompanyName;
             return View(admins);
         }

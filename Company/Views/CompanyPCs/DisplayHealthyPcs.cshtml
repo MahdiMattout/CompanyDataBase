@@ -20,7 +20,10 @@
                 PcID
             </th>
             <th>
-                CPU
+                CPU Usage
+            </th>
+            <th>
+                Memory Usage
             </th>
         </tr>
     </thead>
@@ -36,6 +39,9 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.AverageCpuUsage)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AverageMemoryUsage)
             </td>
         </tr>
         }

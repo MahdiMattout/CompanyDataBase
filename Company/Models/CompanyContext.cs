@@ -8,10 +8,12 @@ namespace Company.Models
 {
     public partial class CompanyContext : DbContext
     {
+
         public CompanyContext(DbContextOptions<CompanyContext> options)
             : base(options)
         {
         }
+
         public virtual DbSet<AdminsOfDangerousPc> AdminsOfDangerousPcs { get; set; }
         public virtual DbSet<Company> Companies { get; set; }
         public virtual DbSet<CompanyPc> CompanyPcs { get; set; }
@@ -47,6 +49,8 @@ namespace Company.Models
                 entity.Property(e => e.CompanyName)
                     .IsRequired()
                     .HasMaxLength(45);
+
+                entity.Property(e => e.CountDPcId).HasColumnName("count(d.PcID)");
 
                 entity.Property(e => e.Email)
                     .IsRequired()

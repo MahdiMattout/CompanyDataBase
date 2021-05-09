@@ -89,10 +89,10 @@
 
 
         <div>
-            Is this employee an admin?
+            @*Is this employee an admin?
             <label>
                 @Html.CheckBox("IsAdmin", false)
-            </label>
+            </label>*@
             <div class="form-group float-right">
                 <input type="submit" value="Add Employee" class="btn btn-primary" />
                 <a asp-controller="Companies" asp-action="Details" asp-route-Name="@ViewData["CompanyName"]">Back to all Employees</a>

@@ -18,5 +18,6 @@ namespace Company.Models
         public int Ssn { get; set; }
         public string CompanyName { get; set; }
         public byte IsAdmin { get; set; }
+        public long CountDPcId { get; set; }
     }
 }

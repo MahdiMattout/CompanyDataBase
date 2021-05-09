@@ -19,24 +19,30 @@
                 PcID
             </th>
             <th>
-                CPU
+                CPU Usage
+            </th>
+            <th>
+                Memory Usage
             </th>
         </tr>
     </thead>
     <tbody>
         @foreach (var item in Model)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.NameOfUser)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.PcId)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.AverageCpuUsage)
-                </td>
-            </tr>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.NameOfUser)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PcId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AverageCpuUsage) %
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AverageMemoryUsage) % 
+            </td>
+        </tr>
         }
     </tbody>
 </table>

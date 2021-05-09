@@ -16,7 +16,7 @@
 <div>
     <form method="get" asp-action="Index">
         <p>
-            <input style="width:300px" type="search" placeholder="Search for companies by Name or email" value="@ViewData["GetCompanies"]" name="CompanySearch" />
+            <input style="width:300px" type="search" placeholder="Search for companies by Name" value="@ViewData["GetCompanies"]" name="CompanySearch" />
             <input type="submit" value="Search" class="btn btn-primary" />
             <a asp-action="Index">Get All Companies</a>
         </p>

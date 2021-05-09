@@ -51,17 +51,17 @@
                     <p class="float-left font-weight-bold"> &nbsp;&nbsp; or &nbsp;&nbsp; </p>
                     <a asp-controller="HourlyPaidEmployee" asp-action="Create" asp-route-CompanyName="@Model.Name"><input id="AddNewEmployee" type="button" value="Hourly Paid" class="btn btn-secondary" /></a>
                     <br />
-                    <br/>
+                    <br />
                 </dd>
 
                 <dt>View PCs:</dt>
                 <dd>
                     <a asp-controller="CompanyPCs" asp-action="DisplayPCs" asp-route-CompanyName="@Model.Name"><input id="ViewPCs" type="button" value="View Employees' Pcs" class="btn btn-primary" /></a>
                     <br />
-                    <br/>
+                    <br />
                 </dd>
 
-                <dt class="text-wrap" >View information and number of relatives of low salary employees:</dt>
+                <dt class="text-wrap">View information and number of relatives of low salary employees:</dt>
                 <dd>
                     <a asp-controller="Companies" asp-action="DisplayLowSalaryEmployees" asp-route-CompanyName="@Model.Name"><input id="ViewLowSalaryEmployees" type="button" value="View Low Salary Employees" class="btn btn-info" /></a>
                 </dd>
@@ -70,6 +70,14 @@
     </div>
 
     <br />
+
+    <form method="get" asp-controller="Companies" asp-action="Details" asp-route-CompanyName="@Model.Name" asp-route-EmployeeFirstName="@ViewData["GetEmployees"]">
+        <p>
+            <input style="width:300px" type="search" placeholder="Search for employees by Name" value="wefew" name="EmployeeFirstName"  />
+            <input type="submit" value="Search" class="btn btn-primary" />
+            <a asp-controller="Companies" asp-action="Details" asp-route-name="@Model.Name">Get All Employees</a>
+        </p>
+    </form>
 
     <table class="table bg-white table-striped table-bordered table-condensed table-hover">
         <thead class="thead-dark">

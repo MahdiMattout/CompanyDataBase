@@ -16,17 +16,17 @@ namespace Company.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(string CompanyName,string IsAdmin, [Bind("EmployeeId,FirstName,LastName,Email,OfficeExtension,Address,OfficeNumber,Position,Ssn")] Employee employee, [Bind("HourlyWage,OvertimeWage")] HourlyPaid hourlyPaid, [Bind("Salary,Bonus")] MonthlyPaid monthlyPaid)
+        public IActionResult Create(string CompanyName, [Bind("EmployeeId,FirstName,LastName,Email,OfficeExtension,Address,OfficeNumber,Position,Ssn")] Employee employee, [Bind("HourlyWage,OvertimeWage")] HourlyPaid hourlyPaid, [Bind("Salary,Bonus")] MonthlyPaid monthlyPaid)
         {
-            if(IsAdmin == "true")
+            if(employee.Position.Equals("Admin"))
             {
                 employee.IsAdmin = 1;
-
             }
             else
             {
                 employee.IsAdmin = 0;
             }
+         
             employee.CompanyName = CompanyName;
             if (monthlyPaid.Bonus != null)
                 employee.MonthlyPaid = monthlyPaid;
