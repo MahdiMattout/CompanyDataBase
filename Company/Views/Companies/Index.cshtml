@@ -4,18 +4,30 @@
 
 @{List<Company> Companies = ViewData["Companies"] as List<Company>;}
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+
+
+<div class="font-weight-bold">
+    <h2 class="font-weight-bold">Companies</h2>
+</div>
+
+<br/>
+<br/>
+
+<div>
     <form method="get" asp-action="Index">
         <p>
-        <input type="search" placeholder="Search for companies by Name or email" value="@ViewData["GetCompanies"]" name="CompanySearch" style="width:500px"/>
-        <input type="submit" value="Search" class="btn btn-primary"/>
+            <input style="width:300px" type="search" placeholder="Search for companies by Name or email" value="@ViewData["GetCompanies"]" name="CompanySearch" />
+            <input type="submit" value="Search" class="btn btn-primary" />
             <a asp-action="Index">Get All Companies</a>
-          </p>
+        </p>
     </form>
-<table class="table">
-    <thead>
+    <p class="float-right font-weight-bold">
+        <a asp-action="Create">Add a New Company</a>
+    </p>
+</div>
+
+<table class="table bg-white table-striped table-bordered table-condensed table-hover">
+    <thead class="thead-dark">
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.Name)
@@ -41,31 +53,31 @@
     <tbody>
         @foreach (var item in Companies)
         {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Country)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.City)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Zip)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PhoneNumber)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ContactEmail)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-name="@item.Name">Edit</a> |
-                <a asp-action="Details" asp-route-name="@item.Name">Details</a> |
-                <a asp-action="Delete" asp-route-name="@item.Name">Delete</a>
-            </td>
-        </tr>
+            <tr>
+                <td style="font-weight: bold">
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Country)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.City)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Zip)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PhoneNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ContactEmail)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-name="@item.Name">Edit</a> |
+                    <a asp-action="Details" asp-route-name="@item.Name">Details</a> |
+                    <a asp-action="Delete" asp-route-name="@item.Name">Delete</a>
+                </td>
+            </tr>
         }
     </tbody>
 </table>

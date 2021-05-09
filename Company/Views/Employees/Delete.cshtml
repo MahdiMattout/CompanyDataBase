@@ -6,9 +6,8 @@
 
 <h1>Delete</h1>
 
-<h3>Are you sure you want to delete this?</h3>
+<h3>Are you sure you want to delete this Employee?</h3>
 <div>
-    <h4>Person</h4>
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
@@ -55,10 +54,11 @@
         </dd>
     </dl>
 
-
+    <br/>
+    <br/>
     <form asp-action="Delete" asp-route-EmployeeId="@Model.EmployeeId" asp-route-CompanyName="@ViewData["CompanyName"]">
         <input type="hidden" asp-for="EmployeeId" />
         <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-controller="Companies" asp-action="Details" asp-route-Name="@ViewData["CompanyName"]">Back to List</a>
+        <a asp-controller="Companies" asp-action="Details" asp-route-Name="@ViewData["CompanyName"]">Back to all Employees</a>
     </form>
 </div>

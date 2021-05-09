@@ -1,39 +1,40 @@
 ﻿@model List<CountRelativesOfLowSalaryEmployee>
-
 @{
-
 }
 
+
 <div>
-    <h4>PCs</h4>
-    <hr />
-    <dl class="row">
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>
-                        @Html.DisplayName("EmployeeID")
-                    </th>
-                    <th>
-                        @Html.DisplayName("Number Of Relatives")
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model)
-                {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.EmployeeId)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.CountRelativesName)
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-    </dl>
+    <h3 class="font-weight-bold">Info on Low-Salary Employees</h3>
+    <h5 class="font-weight-lighter">Monthly wage < 1000 or hourly wage < 10</h5>
 </div>
-<div>
-    <a asp-controller="Companies" asp-action="Details" asp-route-name=@ViewData["CompanyName"]>Back to list</a>
+
+<br />
+<br />
+
+<table class="table bg-white table-striped table-bordered table-condensed table-hover">
+    <thead class="thead-dark">
+        <tr>
+            <th>
+                Employee ID
+            </th>
+            <th>
+                Number of Relatives
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EmployeeId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CountRelativesName)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a asp-controller="Companies" asp-action="Details" asp-route-name=@ViewData["CompanyName"]>Back to list</a>

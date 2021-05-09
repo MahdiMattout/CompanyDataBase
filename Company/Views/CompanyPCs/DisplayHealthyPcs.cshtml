@@ -1,39 +1,45 @@
 ﻿@model List<HealthyPc>
-
 @{
-
 }
 
+
 <div>
-    <h4>PCs</h4>
-    <hr />
-    <dl class="row">
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>
-                        @Html.DisplayName("PcId")
-                    </th>
-                    <th>
-                        @Html.DisplayName("Cpu")
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model)
-                {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.PcId)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.AverageCpuUsage)
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-    </dl>
+    <h3 class="font-weight-bold">Info about Healthy PCs</h3>
 </div>
-<div>
-    <a asp-controller="CompanyPCs" asp-action="DisplayPCs" asp-route-CompanyName=@ViewData["CompanyName"]>Back to list</a>
+
+<br />
+<br />
+
+<table class="table bg-white table-striped table-bordered table-condensed table-hover">
+    <thead class="thead-dark">
+        <tr>
+            <th>
+                User
+            </th>
+            <th>
+                PcID
+            </th>
+            <th>
+                CPU
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.NameOfUser)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PcId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AverageCpuUsage)
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>
+
+<a asp-controller="CompanyPCs" asp-action="DisplayPCs" asp-route-CompanyName=@ViewData["CompanyName"]>Back to list</a>

@@ -3,78 +3,105 @@
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
 
-<h4>Employee</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-controller="Employees" asp-action="Create" asp-route-CompanyName="@ViewData["CompanyName"]">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="FirstName" class="control-label"></label>
-                <input required asp-for="FirstName" class="form-control" />
+<div class="container">
+    <h3>Create Hourly Paid Employee</h3>
+    <hr />
+
+    <form asp-controller="Employees" class="form-horizontal" asp-action="Create" asp-route-CompanyName="@ViewData["CompanyName"]">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <div class="form-group">
+            <label asp-for="FirstName" class="control-label col-sm-2"></label>
+            <div class="col-sm-10">
+                <input required asp-for="FirstName" class="form-control" placeholder="Enter employee's first name" />
                 <span asp-validation-for="FirstName" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="LastName" class="control-label"></label>
-                <input required asp-for="LastName" class="form-control" />
+        </div>
+
+        <div class="form-group">
+            <label asp-for="LastName" class="control-label col-sm-2"></label>
+            <div class="col-sm-10">
+                <input required asp-for="LastName" class="form-control" placeholder="Enter employee's last name"/>
                 <span asp-validation-for="LastName" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Email" class="control-label"></label>
-                <input required asp-for="Email" class="form-control" />
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Email" class="control-label col-sm-2"></label>
+            <div class="col-sm-10">
+                <input required asp-for="Email" class="form-control" placeholder="Enter email"/>
                 <span asp-validation-for="Email" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="OfficeExtension" class="control-label"></label>
-                <input required asp-for="OfficeExtension" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label asp-for="OfficeExtension" class="control-label col-sm-2"></label>
+            <div class="col-sm-10">
+                <input required asp-for="OfficeExtension" class="form-control" placeholder="Enter office phone extension"/>
                 <span asp-validation-for="OfficeExtension" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Address" class="control-label"></label>
-                <input required asp-for="Address" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label asp-for="Address" class="control-label col-sm-2"></label>
+            <div class="col-sm-10">
+                <input required asp-for="Address" class="form-control" placeholder="Enter home address"/>
                 <span asp-validation-for="Address" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="OfficeNumber" class="control-label"></label>
-                <input required asp-for="OfficeNumber" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label asp-for="OfficeNumber" class="control-label col-sm-2"></label>
+            <div class="col-sm-10">
+                <input required asp-for="OfficeNumber" class="form-control" placeholder="Enter office number"/>
                 <span asp-validation-for="OfficeNumber" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Position" class="control-label"></label>
-                <input required asp-for="Position" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label asp-for="Position" class="control-label col-sm-2"></label>
+            <div class="col-sm-10">
+                <input required asp-for="Position" class="form-control" placeholder="Enter employee's position"/>
                 <span asp-validation-for="Position" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Ssn" class="control-label"></label>
-                <input required asp-for="Ssn" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label asp-for="Ssn" class="control-label col-sm-2"></label>
+            <div class="col-sm-10">
+                <input required asp-for="Ssn" class="form-control" placeholder="ssn"/>
                 <span asp-validation-for="Ssn" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="HourlyPaid.HourlyWage" class="control-label"></label>
-                <input required asp-for="HourlyPaid.HourlyWage" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label asp-for="HourlyPaid.HourlyWage" class="control-label col-sm-2"></label>
+            <div class="col-sm-10">
+                <input required asp-for="HourlyPaid.HourlyWage" class="form-control" placeholder="Enter salary (hourly wage)"/>
                 <span asp-validation-for="HourlyPaid.HourlyWage" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="HourlyPaid.OvertimeWage" class="control-label"></label>
-                <input required asp-for="HourlyPaid.OvertimeWage" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label asp-for="HourlyPaid.OvertimeWage" class="control-label col-sm-2"></label>
+            <div class="col-sm-10">
+                <input required asp-for="HourlyPaid.OvertimeWage" class="form-control" placeholder="Enter overtime wage"/>
                 <span asp-validation-for="HourlyPaid.OvertimeWage" class="text-danger"></span>
             </div>
-            <div>Is this employee an admin?</div>
+        </div>
+
+
+        <br/>
+
+
+        <div>
+            Is this employee an admin?
             <label>
-                @Html.CheckBox("IsAdmin",true)
+                @Html.CheckBox("IsAdmin", false)
             </label>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+            <div class="form-group float-right">
+                <input type="submit" value="Add Employee" class="btn btn-primary" />
+                <a asp-controller="Companies" asp-action="Details" asp-route-Name="@ViewData["CompanyName"]">Back to all Employees</a>
             </div>
-        </form>
-    </div>
+        </div>
+        
+    </form>
 </div>
 
-<div>
-    <a asp-controller="Companies" asp-action="Details" asp-route-Name="@ViewData["CompanyName"]">Back to List</a>
-</div>
 @*@section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
