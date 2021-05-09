@@ -26,9 +26,15 @@ namespace Company.Controllers
         }
         public IActionResult Details(int EmployeeId)
         {
+            // query 28
             var MonthlyPaidEmployee = _db.MonthlyPaids.Find(EmployeeId);
             if (MonthlyPaidEmployee == null) return NotFound();
+
+
+            // query 14
             var employee = _db.Employees.Find(EmployeeId);
+
+            // query 26
             employee.Relatives = _db.Relatives.Where(e => e.EmployeeId == EmployeeId).ToList();
             ViewData["Employee"] = employee;
             return View(MonthlyPaidEmployee);
@@ -38,9 +44,15 @@ namespace Company.Controllers
         public IActionResult Details(int? EmployeeId, string Relationship)
         {
             ViewData["Relationship"] = Relationship;
+
+            // query 28
             var MonthlyPaidEmployee = _db.MonthlyPaids.Find(EmployeeId);
             if (MonthlyPaidEmployee == null) return NotFound();
+
+            // query 14
             var employee = _db.Employees.Find(EmployeeId);
+
+            // 27
             employee.Relatives = _db.Relatives.Select(p => p).Where(x => x.EmployeeId.Equals(employee.EmployeeId) && x.Relationship.Equals(Relationship)).ToList();
             ViewData["Employee"] = employee;
             return View(MonthlyPaidEmployee);

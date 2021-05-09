@@ -34,6 +34,7 @@ namespace Company.Controllers
                 employee.HourlyPaid = hourlyPaid;
             if (ModelState.IsValid)
             {
+                // query 21
                 _db.Add(employee);
                 _db.SaveChanges();
                 return RedirectToAction("Details", "Companies", new { Name = CompanyName });
@@ -46,7 +47,7 @@ namespace Company.Controllers
             {
                 return NotFound();
             }
-
+            // query 14
             var employee = _db.Employees
                 .FirstOrDefault(m => m.EmployeeId == EmployeeId);
             if (employee == null)
@@ -61,7 +62,10 @@ namespace Company.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult DeleteConfirmed(int EmployeeId, string CompanyName)
         {
+            // query 14
             var employee = _db.Employees.Where(e => e.EmployeeId == EmployeeId).FirstOrDefault();
+
+            // query 22
             _db.Employees.Remove(employee);
             _db.SaveChanges();
             return RedirectToAction("Details", "Companies", new { Name = CompanyName });
@@ -72,7 +76,7 @@ namespace Company.Controllers
             {
                 return NotFound();
             }
-
+            // query 14
             var employee = _db.Employees.Find(EmployeeId);
             if (employee == null)
             {
@@ -92,6 +96,7 @@ namespace Company.Controllers
 
             if (ModelState.IsValid)
             {
+                // query 23
                 _db.Update(employee);
                 _db.SaveChanges();
 
@@ -103,9 +108,11 @@ namespace Company.Controllers
 
         public IActionResult Details(int EmployeeId)
         {
+            // query 14
             var employee = _db.Employees.Find(EmployeeId);
             if(employee != null)
             {
+                // query 24
                 var hourlyPaid = _db.HourlyPaids.Find(EmployeeId);
                 if(hourlyPaid != null)
                 {
@@ -121,6 +128,7 @@ namespace Company.Controllers
 
         public IActionResult DisplayEmployee(string Companyname)
         {
+            // query 25
             var dpc = _db.DangerousPcsViews.ToList();
             ViewData["DangerousPcs"] = dpc;
 

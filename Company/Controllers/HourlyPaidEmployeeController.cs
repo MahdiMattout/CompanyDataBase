@@ -26,9 +26,14 @@ namespace Company.Controllers
         }
         public IActionResult Details(int EmployeeId)
         {
+            // query 24
             var hourlyPaidEmployee = _db.HourlyPaids.Find(EmployeeId);
             if (hourlyPaidEmployee == null) return NotFound();
+
+            // query 14
             var employee = _db.Employees.Find(EmployeeId);
+
+            // query 26
             employee.Relatives = _db.Relatives.Where(e => e.EmployeeId == EmployeeId).ToList();
             ViewData["Employee"] = employee;
             return View(hourlyPaidEmployee);
@@ -38,10 +43,18 @@ namespace Company.Controllers
         public IActionResult Details(int? EmployeeId, string Relationship)
         {
             ViewData["Relationship"] = Relationship;
+
+            // query 24
             var HourlyPaidEmployee = _db.HourlyPaids.Find(EmployeeId);
+            
             if (HourlyPaidEmployee == null) return NotFound();
+            
+            // query 14
             var employee = _db.Employees.Find(EmployeeId);
+            
+            // query 27
             employee.Relatives = _db.Relatives.Select(p => p).Where(x => x.EmployeeId.Equals(employee.EmployeeId) && x.Relationship.Equals(Relationship)).ToList();
+            
             ViewData["Employee"] = employee;
             return View(HourlyPaidEmployee);
         }

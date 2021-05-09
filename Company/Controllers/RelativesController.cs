@@ -26,6 +26,7 @@ namespace Company.Controllers
             relative.EmployeeId = EmployeeId;
             if (ModelState.IsValid)
             {
+                // query 29
                 _db.Add(relative);
                 _db.SaveChanges();
                 return RedirectToAction("Details", "Employees", new { EmployeeId });
@@ -39,7 +40,7 @@ namespace Company.Controllers
             {
                 return NotFound();
             }
-
+            // query 30
             var relative = _db.Relatives.Where(e => e.EmployeeId == EmployeeId && RelativeName.Equals(e.Name)).FirstOrDefault();
             if (relative == null)
             {
@@ -52,7 +53,10 @@ namespace Company.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult DeleteConfirmed(int EmployeeId, string RelativeName)
         {
+            // query 30
             var relative = _db.Relatives.Where(e => e.EmployeeId == EmployeeId && RelativeName.Equals(e.Name)).FirstOrDefault();
+
+            // query 31
             _db.Relatives.Remove(relative);
             _db.SaveChanges();
             return RedirectToAction("Details", "Employees", new { EmployeeId });
@@ -64,6 +68,7 @@ namespace Company.Controllers
             {
                 return NotFound();
             }
+            // query 30
             var relative = _db.Relatives.Where(e => e.EmployeeId == EmployeeId && e.Name.Equals(RelativeName)).FirstOrDefault();
             if (relative == null)
             {
@@ -75,12 +80,16 @@ namespace Company.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Edit(int EmployeeId, string RelativeName, [Bind("Name,Relationship")] Relative relative)
         {
+            // query 30
             var relativeFromDb = _db.Relatives.Where(e => e.EmployeeId == EmployeeId && e.Name.Equals(RelativeName)).FirstOrDefault();
+
+            // query 31
             _db.Remove(relativeFromDb);
             relative.EmployeeId = EmployeeId;
             if (ModelState.IsValid)
             {
                 _db.SaveChanges();
+                // query 32
                 _db.Relatives.Add(relative);
                 _db.SaveChanges();
                 return RedirectToAction("Details", "Employees", new { EmployeeId });
