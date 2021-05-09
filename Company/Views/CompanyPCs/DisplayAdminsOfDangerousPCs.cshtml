@@ -5,36 +5,42 @@
 }
 
 <div>
-    <h4>PCs</h4>
-    <hr />
-    <dl class="row">
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>
-                        @Html.DisplayName("AdminId")
-                    </th>
-                    <th>
-                        @Html.DisplayName("AdminEmail")
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model)
-                {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.EmployeeId)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Email)
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-    </dl>
+    <h3 class="font-weight-bold">Info about Admins of the PCs in Danger</h3>
 </div>
-<div>
-    <a asp-controller="CompanyPCs" asp-action="DisplayPCs" asp-route-CompanyName=@ViewData["CompanyName"]>Back to list</a>
-</div>
+
+<br />
+<br />
+
+<table class="table bg-white table-striped table-bordered table-condensed table-hover">
+    <thead class="thead-dark">
+        <tr>
+            <th>
+                Admin ID
+            </th>
+            <th>
+                Admin Email
+            </th>
+            <th>
+                Number of Unhealthy PCs
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.EmployeeId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+               1
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>
+
+<a asp-controller="CompanyPCs" asp-action="DisplayPCs" asp-route-CompanyName=@ViewData["CompanyName"]>Back to list</a>

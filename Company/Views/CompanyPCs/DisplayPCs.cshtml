@@ -4,60 +4,64 @@
 
 @{List<CompanyPc> CompanyPCs = ViewData["CompanyPCs"] as List<CompanyPc>;}
 
-<a asp-controller="CompanyPCs" asp-action="DisplayDangerousPcs" asp-route-CompanyName=@ViewData["CompanyName"]><input id="ViewDangerousPCs" type="button" value="View Dangerous PCs" class="btn btn-primary" /></a>
-<a asp-controller="CompanyPCs" asp-action="DisplayHealthyPcs" asp-route-CompanyName=@ViewData["CompanyName"]><input id="ViewHealthyPCs" type="button" value="View Healthy PCs" class="btn btn-primary" /></a>
-<a asp-controller="CompanyPCs" asp-action="DisplayAdminsOfDangerousPCs" asp-route-CompanyName=@ViewData["CompanyName"]><input id="ViewAdminsOfDangerousPCs" type="button" value="View Admins of Dangerous PCs" class="btn btn-primary" /></a>
-<p>
-    <a asp-controller="CompanyPCs" asp-action="Create" asp-route-CompanyName="@ViewData["CompanyName"]">Create New</a>
-</p>
 <div>
-    <a asp-controller="Companies" asp-action="Details" asp-route-Name="@ViewData["CompanyName"]">Back to List</a>
+    <a asp-controller="CompanyPCs" asp-action="DisplayDangerousPcs" asp-route-CompanyName=@ViewData["CompanyName"]><input id="ViewDangerousPCs" type="button" value="View PCs in Danger" class="btn btn-danger" /></a>
+    <a asp-controller="CompanyPCs" asp-action="DisplayAdminsOfDangerousPCs" asp-route-CompanyName=@ViewData["CompanyName"]><input id="ViewAdminsOfDangerousPCs" type="button" value="View Admins of PCs in Danger" class="btn btn-info" /></a><br />
+    <br />
+    <a asp-controller="CompanyPCs" asp-action="DisplayHealthyPcs" asp-route-CompanyName=@ViewData["CompanyName"]><input id="ViewHealthyPCs" type="button" value="View Healthy PCs" class="btn btn-success" /></a><br />
 </div>
-<table class="table">
-    <thead>
+
+<div class="float-right">
+    <p>
+        <a asp-controller="CompanyPCs" asp-action="Create" asp-route-CompanyName="@ViewData["CompanyName"]">Add a New PC</a>
+    </p>
+</div>
+
+<table class="table bg-white table-striped table-bordered table-condensed table-hover">
+    <thead class="thead-dark">
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.PcId)
+                PC-ID
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.AdminId)
+                Admin ID
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.EmployeeId)
+                Employee ID
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.NameOfUser)
+                Name of User (Employee)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.CpuModel)
+                CPU Model
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Cpumanufacturer)
+                CPU Manufacturer
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ClockSpeed)
+                Clock Speed
             </th>
 
             <th>
-                @Html.DisplayNameFor(model => model.DiskModel)
+                Disk Model
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.DiskSpace)
+                Disk Space
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ReadWriteSpeed)
+                Read Write Speed
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.MemoryModel)
+                Memory Model
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.TotalMemory)
+                Total Memory
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.AverageCpuUsage)
+                Average CPU Usage
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.AverageMemoryUsage)
+                Average Memory Usage
             </th>
             <th></th>
         </tr>
@@ -119,3 +123,7 @@
         }
     </tbody>
 </table>
+
+<div>
+    <a asp-controller="Companies" asp-action="Details" asp-route-Name="@ViewData["CompanyName"]">Back to List</a>
+</div>

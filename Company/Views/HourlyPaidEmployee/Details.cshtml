@@ -5,84 +5,110 @@
 @{var employee = ViewData["Employee"] as Employee;}
 
 
-<h1>Details</h1>
+<div class="container">
 
-<div>
-    <h4>@Html.DisplayFor(model => employee.FirstName)</h4>
+    <h2>@Html.DisplayFor(model => employee.FirstName)</h2>
+    <h5>Employee Details</h5>
     <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            Type
-            <br />
-            @Html.DisplayNameFor(model => model.HourlyWage)
-            <br />
-            @Html.DisplayNameFor(model => model.OvertimeWage)
-            <br />
-            @Html.DisplayNameFor(model => employee.Email)
-            <br />
-            @Html.DisplayNameFor(model => employee.OfficeNumber)
-            <br />
-            @Html.DisplayNameFor(model => employee.OfficeExtension)
-            <br />
-            @Html.DisplayNameFor(model => employee.Email)
-            <br />
-            @Html.DisplayNameFor(model => employee.Address)
-            <br />
-            Relatives
-            <br />
-            <a asp-controller="Relatives" asp-action="Create" asp-route-EmployeeId="@employee.EmployeeId"><input id="AddNewRelative" type="button" value="New Relative" class="btn btn-primary" /></a>
-        </dt>
+    <div class="row">
+        <div class="col-sm">
+            <dl class="dl-horizontal">
+                <dt>
+                    Type
+                </dt>
+                <dd>
+                    'Hourly Paid'
+                </dd>
 
-        <dd class="col-sm-10">
-            Hourly Paid
+                <dt>
+                    Hourly Wage
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.HourlyWage)
+                </dd>
+
+                <dt>
+                    Overtime Wage
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.OvertimeWage)
+                </dd>
+
+                <dt>
+                    Email
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => employee.Email)
+                </dd>
+
+                <dt>
+                    Office Number
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => employee.OfficeNumber)
+                </dd>
+
+                <dt>
+                    Office Extension
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => employee.OfficeExtension)
+                </dd>
+
+                <dt>
+                    Address
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => employee.Address)
+                </dd>
+            </dl>
+        </div>
+    </div>
+
+    <br/>
+
+    <div>
+        <b>Relatives</b>
+        <div class="float-right">
+            <a asp-controller="Relatives" asp-action="Create" asp-route-EmployeeId="@employee.EmployeeId"><input id="AddNewRelative" type="button" value="Add New Relative" class="btn btn-info" /></a>
+         </div>
+    </div>
+    <br/>
+
+    <table class="table bg-white table-striped table-bordered table-condensed table-hover">
+        <thead class="thead-dark">
+            <tr>
+                <th>
+                    @Html.DisplayName("Name")
+                </th>
+                <th>
+                    @Html.DisplayName("Relationship")
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var relative in employee.Relatives)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => relative.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => relative.Relationship)
+                    </td>
+                    <td>
+                        <a asp-controller="Relatives" asp-action="Edit" asp-route-EmployeeId="@employee.EmployeeId" asp-route-RelativeName="@relative.Name">Edit</a> |
+                        <a asp-controller="Relatives" asp-action="Delete" asp-route-EmployeeId="@employee.EmployeeId" asp-route-RelativeName="@relative.Name">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
             <br />
-            @Html.DisplayFor(model => model.HourlyWage)
-            <br />
-            @Html.DisplayFor(model => model.OvertimeWage)
-            <br />
-            @Html.DisplayFor(model => employee.Email)
-            <br />
-            @Html.DisplayFor(model => employee.OfficeNumber)
-            <br />
-            @Html.DisplayFor(model => employee.OfficeExtension)
-            <br />
-            @Html.DisplayFor(model => employee.Email)
-            <br />
-            @Html.DisplayFor(model => employee.Address)
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>
-                            @Html.DisplayName("Name")
-                        </th>
-                        <th>
-                            @Html.DisplayName("Relationship")
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var relative in employee.Relatives)
-                    {
-                        <tr>
-                            <td>
-                                @Html.DisplayFor(modelItem => relative.Name)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => relative.Relationship)
-                            </td>
-                            <td>
-                                <a asp-controller="Relatives" asp-action="Edit" asp-route-EmployeeId="@employee.EmployeeId" asp-route-RelativeName="@relative.Name">Edit</a> |
-                                <a asp-controller="Relatives" asp-action="Delete" asp-route-EmployeeId="@employee.EmployeeId" asp-route-RelativeName="@relative.Name">Delete</a>
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-            <br />
-        </dd>
-    </dl>
 </div>
+<br/>
 <div>
-    <a asp-controller="Employees" asp-action="Edit" asp-route-EmployeeId="@employee.EmployeeId">Edit</a> |
-    <a asp-controller="Companies" asp-action="Details" asp-route-Name="@employee.CompanyName">Back to List</a>
+    <a asp-controller="Employees" asp-action="Edit" asp-route-EmployeeId="@employee.EmployeeId">Edit Employee</a> <br/>
+    <a asp-controller="Companies" asp-action="Details" asp-route-Name="@employee.CompanyName">Back to all Employees</a>
 </div>

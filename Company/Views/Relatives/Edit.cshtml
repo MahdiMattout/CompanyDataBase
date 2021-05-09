@@ -1,31 +1,40 @@
 ﻿@model Relative
 @{
 }
-<h1>Edit</h1>
 
-<h4>Relative</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit" asp-route-EmployeeId="@Model.EmployeeId" asp-route-RelativeName="@Model.Name">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            @*<input type="hidden" asp-for="Name" />*@
-            <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
+
+
+<div class="container">
+
+    <h3>Edit Relative</h3>
+    <hr />
+    <form class="form-horizontal" asp-action="Edit" asp-route-EmployeeId="@Model.EmployeeId" asp-route-RelativeName="@Model.Name">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        @*<input type="hidden" asp-for="Name" />*@
+        <div class="form-group">
+            <label asp-for="Name" class="control-label col-sm-2"></label>
+            <div class="col-sm-10">
                 <input asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
-
-                <label asp-for="Relationship" class="control-label"></label>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="Relationship" class="control-label col-sm-2"></label>
+            <div class="col-sm-10">
                 <input asp-for="Relationship" class="form-control" />
                 <span asp-validation-for="Relationship" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
-</div>
+        </div>
 
-<div>
-    <a asp-controller="Employees" asp-action="Details" asp-route-EmployeeId="@Model.EmployeeId">Back to List</a>
+        <br />
+        <br />
+        <br />
+        <hr />
+        <a asp-controller="Employees" asp-action="Details" asp-route-EmployeeId="@Model.EmployeeId">Back to Employee Details</a>
+
+        <div class="form-group float-right">
+            <input type="submit" value="Save" class="btn btn-primary" />
+        </div>
+    </form>
+
 </div>
