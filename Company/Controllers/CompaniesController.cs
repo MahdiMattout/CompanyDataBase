@@ -19,6 +19,7 @@ namespace Company.Controllers
 
         public IActionResult Index()
         {
+            // query 1
             var companies = _db.Companies.ToList();
             ViewData["Companies"] = companies;
             return View();
@@ -27,10 +28,12 @@ namespace Company.Controllers
         public async Task<IActionResult> Index(string CompanySearch)
         { 
             ViewData["GetCompanies"] = CompanySearch;
+            // query 1
             var companyquery = from x in _db.Companies select x;
             if (!String.IsNullOrEmpty(CompanySearch))
             {
-               companyquery = companyquery.Where(x => x.Name.Contains(CompanySearch));
+                // query 2
+                companyquery = companyquery.Where(x => x.Name.Contains(CompanySearch));
             }
             ViewData["Companies"] = await companyquery.AsNoTracking().ToListAsync();
             return View();
@@ -41,7 +44,7 @@ namespace Company.Controllers
             {
                 return NotFound();
             }
-
+            // query 3
             var company = _db.Companies.Where(c => c.Name.Equals(name)).FirstOrDefault();
             if (company == null)
             {
@@ -60,6 +63,7 @@ namespace Company.Controllers
             {
                 try
                 {
+                    // query 4
                     _db.Update(company);
                     _db.SaveChanges();
                 }
@@ -82,6 +86,7 @@ namespace Company.Controllers
         {
             if (ModelState.IsValid)
             {
+                // query 5
                 _db.Add(company);
                 await _db.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -95,7 +100,7 @@ namespace Company.Controllers
             {
                 return NotFound();
             }
-
+            // query 3
             var company = _db.Companies
                 .FirstOrDefault(m => m.Name == name);
             if (company == null)
@@ -109,7 +114,10 @@ namespace Company.Controllers
         [ValidateAntiForgeryToken]
         public  IActionResult DeleteConfirmed(string name)
         {
+            // query 3
             var company = _db.Companies.Find(name);
+
+            // query 6
             _db.Companies.Remove(company);
             _db.SaveChanges();
             return RedirectToAction(nameof(Index));
@@ -120,13 +128,14 @@ namespace Company.Controllers
             {
                 return NotFound();
             }
-
+            // query 3
             var company = _db.Companies
                 .FirstOrDefault(m => m.Name == name);
             if (company == null)
             {
                 return NotFound();
             }
+            // query 7
             company.Employees = _db.Employees.Select(p => p).Where(x => x.CompanyName == company.Name).ToList();
             return View(company);
         }
@@ -139,19 +148,22 @@ namespace Company.Controllers
             {
                 return NotFound();
             }
-
+            // query 8
             var company = _db.Companies
                 .FirstOrDefault(m => m.Name == Name);
             if (company == null)
             {
                 return NotFound();
             }
+            // query 8
             company.Employees = _db.Employees.Select(p => p).Where(x => x.CompanyName.Equals(company.Name) && x.FirstName.Equals(EmployeeFirstName)).ToList();
             return View(company);
         }
         public IActionResult DisplayLowSalaryEmployees(string CompanyName)
         {
+            // query 7
             var employyesInSpecificCompany = _db.Employees.Where(employee => employee.CompanyName.Equals(CompanyName)).ToList();
+            // query 9
             var employees = _db.CountRelativesOfLowSalaryEmployees.ToList();
             var LowSalaryEmployeesInCompany = new List<CountRelativesOfLowSalaryEmployee>();
             foreach (var employee in employees)

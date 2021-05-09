@@ -20,6 +20,7 @@ namespace Company.Controllers
 
         public IActionResult DisplayPcs(string CompanyName)
         {
+            // query 17
             var companypcs = _db.CompanyPcs.Where(p=>p.NameofCompany.Equals(CompanyName)).ToList();
             foreach(var pc in companypcs)
             {
@@ -42,7 +43,10 @@ namespace Company.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Create(string CompanyName,[Bind("PcId,AdminId,EmployeeId,CpuModel,Cpumanufacturer,ClockSpeed,DiskModel,DiskSpace,ReadWriteSpeed,MemoryModel,TotalMemory")] CompanyPc companyPc)
         {
+            // query 10
             var admin = _db.Employees.Where(e => e.EmployeeId == companyPc.AdminId && e.IsAdmin == 1 && e.CompanyName.Equals(CompanyName)).FirstOrDefault();
+
+            // query 11
             var employee = _db.Employees.Where(e => e.EmployeeId == companyPc.EmployeeId && e.CompanyName.Equals(CompanyName)).FirstOrDefault();
 
             if (employee != null)
@@ -67,6 +71,7 @@ namespace Company.Controllers
             companyPc.AverageMemoryUsage = new Random().Next(0, 100);
             if (ModelState.IsValid)
             {
+                // query 15
                 _db.Add(companyPc);
                 _db.SaveChanges();
                 return RedirectToAction("DisplayPCs", "CompanyPCs", new {CompanyName });
@@ -76,33 +81,27 @@ namespace Company.Controllers
         }
         public IActionResult Delete(int? PcId)
         {
-            /*if (PcId == null)
-            {
-                return NotFound();
-            }*/
-
+            // query 12
             var companypc = _db.CompanyPcs
                 .FirstOrDefault(m => m.PcId == PcId);
-            /*if (companypc == null)
-            {
-                return NotFound();
-            }*/
-
             return View(companypc);
         }
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public IActionResult DeleteConfirmed(int PcId)
         {
+            // query 12
             var companypc = _db.CompanyPcs.Where(e => e.PcId == PcId).FirstOrDefault();
+
+            // query 16
             _db.CompanyPcs.Remove(companypc);
             _db.SaveChanges();
             return RedirectToAction("DisplayPCs", "CompanyPCs", new { CompanyName = companypc.NameofCompany});
         }
         public IActionResult Edit(int? PcId)
         {
-            
 
+            // query 13
             var companypc = _db.CompanyPcs.Find(PcId);
             
             return View(companypc);
@@ -111,8 +110,9 @@ namespace Company.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Edit(int PcId,string CompanyName,[Bind("PcId,AdminId,EmployeeId,CpuModel,Cpumanufacturer,ClockSpeed,DiskModel,DiskSpace,ReadWriteSpeed,MemoryModel,TotalMemory")] CompanyPc companyPc)
         {
-            
             companyPc.NameofCompany = CompanyName;
+
+            // query 14
             var employee = _db.Employees.Where(e => e.EmployeeId == companyPc.EmployeeId).FirstOrDefault();
             companyPc.AverageCpuUsage = new Random().Next(0, 100);
             companyPc.AverageMemoryUsage = new Random().Next(0, 100);
@@ -122,6 +122,7 @@ namespace Company.Controllers
             }
             if (ModelState.IsValid)
             {
+                // query 15
                 _db.Update(companyPc);
                 _db.SaveChanges();
 
@@ -132,18 +133,21 @@ namespace Company.Controllers
         }
         public IActionResult DisplayDangerousPcs(string CompanyName)
         {
+            // query 18
             var pcs = _db.DangerousPcsViews.Where(pc=> pc.NameofCompany.Equals(CompanyName)).ToList();
             ViewData["CompanyName"] = CompanyName;
             return View(pcs);
         }
         public IActionResult DisplayHealthyPcs(string CompanyName)
         {
+            // query 19
             var pcs = _db.HealthyPcs.Where(pc=> pc.NameofCompany.Equals(CompanyName)).ToList();
             ViewData["CompanyName"] = CompanyName;
             return View(pcs);
         }
         public IActionResult DisplayAdminsOfDangerousPCs(string CompanyName)
         {
+            // query 20
             var admins = _db.AdminsOfDangerousPcs.Where(admin => admin.CompanyName.Equals(CompanyName)).ToList();
 
             ViewData["CompanyName"] = CompanyName;
