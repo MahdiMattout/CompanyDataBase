@@ -32,6 +32,41 @@ namespace Company.Controllers
             ViewData["CompanyName"] = CompanyName;
             return View();
         }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult DisplayPCs(string? CompanyName, string NameOfUser)
+        {
+            //ViewData["GetPCs"] = NameOfUser;
+            //if (CompanyName == null)
+            //{
+            //    return NotFound();
+            //}
+            //// query 8
+            //var company = _db.Companies
+            //    .FirstOrDefault(m => m.Name == CompanyName);
+            //if (company == null)
+            //{
+            //    return NotFound();
+            //}
+            //// query 8
+            //company.CompanyPcs = _db.CompanyPcs.Select(p => p).Where(x => x.NameofCompany.Equals(company.Name) && x.NameOfUser.Contains(NameOfUser)).ToList();
+            //ViewData["CompanyPCs"] = company.CompanyPcs;
+            //ViewData["CompanyName"] = CompanyName;
+            //return View();
+
+            // query 17
+            var companypcs = _db.CompanyPcs.Where(p => p.NameofCompany.Equals(CompanyName) && p.NameOfUser.Contains(NameOfUser)).ToList();
+            foreach (var pc in companypcs)
+            {
+                pc.AverageCpuUsage = new Random().Next(0, 100);
+                pc.AverageMemoryUsage = new Random().Next(0, 100);
+            }
+            _db.SaveChanges();
+            ViewData["GetPCs"] = NameOfUser;
+            ViewData["CompanyPCs"] = companypcs;
+            ViewData["CompanyName"] = CompanyName;
+            return View();
+        }
         public IActionResult Create(string CompanyName)
         {
             ViewData["AdminId"] = "";

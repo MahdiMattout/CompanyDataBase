@@ -17,6 +17,14 @@
     </p>
 </div>
 
+<form method="post" asp-controller="CompanyPCs" asp-action="DisplayPCs" asp-route-CompanyName="@ViewData["CompanyName"]">
+    <p>
+        <input style="width:300px" type="search" placeholder="Search for PCs by Name of User" value="@ViewData["GetPCs"]" name="NameOfUser" />
+        <input type="submit" value="Search" class="btn btn-primary" />
+        <a asp-controller="CompanyPCs" asp-action="DisplayPCs" asp-route-CompanyName="@ViewData["CompanyName"]">Get All PCs</a>
+    </p>
+</form>
+
 <table class="table bg-white table-striped table-bordered table-condensed table-hover">
     <thead class="thead-dark">
         <tr>
@@ -91,13 +99,13 @@
                         @Html.DisplayFor(modelItem => item.Cpumanufacturer)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.ClockSpeed)
+                        @Html.DisplayFor(modelItem => item.ClockSpeed)GHz
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.DiskModel)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.DiskSpace)
+                        @Html.DisplayFor(modelItem => item.DiskSpace)GB
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.ReadWriteSpeed)
@@ -106,13 +114,13 @@
                         @Html.DisplayFor(modelItem => item.MemoryModel)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.TotalMemory)
+                        @Html.DisplayFor(modelItem => item.TotalMemory)GB
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.AverageCpuUsage)
+                        @Html.DisplayFor(modelItem => item.AverageCpuUsage)%
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.AverageMemoryUsage)
+                        @Html.DisplayFor(modelItem => item.AverageMemoryUsage)%
                     </td>
                     <td>
                         <a asp-action="Edit" asp-route-PcId="@item.PcId">Edit</a> |
