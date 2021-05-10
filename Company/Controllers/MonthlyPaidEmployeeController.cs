@@ -53,7 +53,7 @@ namespace Company.Controllers
             var employee = _db.Employees.Find(EmployeeId);
 
             // 27
-            employee.Relatives = _db.Relatives.Select(p => p).Where(x => x.EmployeeId.Equals(employee.EmployeeId) && x.Relationship.Equals(Relationship)).ToList();
+            employee.Relatives = _db.Relatives.Select(p => p).Where(x => x.EmployeeId.Equals(employee.EmployeeId) && x.Relationship.Contains(Relationship)).ToList();
             ViewData["Employee"] = employee;
             return View(MonthlyPaidEmployee);
         }

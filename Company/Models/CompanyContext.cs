@@ -8,7 +8,6 @@ namespace Company.Models
 {
     public partial class CompanyContext : DbContext
     {
-
         public CompanyContext(DbContextOptions<CompanyContext> options)
             : base(options)
         {
@@ -29,7 +28,6 @@ namespace Company.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
                 optionsBuilder.UseMySQL("Server=localhost;port=5555;Database=Company;username=root;password=omar123");
             }
         }
@@ -313,9 +311,6 @@ namespace Company.Models
 
                 entity.ToTable("hourly_paid");
 
-                entity.HasIndex(e => e.HourlyPaidEmployeeId, "HourlyPaidEmployeeID_UNIQUE")
-                    .IsUnique();
-
                 entity.Property(e => e.HourlyPaidEmployeeId).HasColumnName("HourlyPaidEmployeeID");
 
                 entity.HasOne(d => d.HourlyPaidEmployee)
@@ -330,9 +325,6 @@ namespace Company.Models
                     .HasName("PRIMARY");
 
                 entity.ToTable("monthly_paid");
-
-                entity.HasIndex(e => e.MonthlyPaidEmployeeId, "MonthlyPaidEmployeeID_UNIQUE")
-                    .IsUnique();
 
                 entity.Property(e => e.MonthlyPaidEmployeeId).HasColumnName("MonthlyPaidEmployeeID");
 

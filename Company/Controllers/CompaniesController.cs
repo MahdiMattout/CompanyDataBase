@@ -156,7 +156,7 @@ namespace Company.Controllers
                 return NotFound();
             }
             // query 8
-            company.Employees = _db.Employees.Select(p => p).Where(x => x.CompanyName.Equals(company.Name) && x.FirstName.Equals(EmployeeFirstName)).ToList();
+            company.Employees = _db.Employees.Select(p => p).Where(x => x.CompanyName.Equals(company.Name) && x.FirstName.Contains(EmployeeFirstName)).ToList();
             return View(company);
         }
         public IActionResult DisplayLowSalaryEmployees(string CompanyName)
